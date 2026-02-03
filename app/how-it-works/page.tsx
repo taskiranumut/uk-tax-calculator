@@ -201,23 +201,6 @@ function ExampleCard({
 export default function HowItWorksPage() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="bg-card">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Calculator
-          </Link>
-          <div className="flex items-center gap-2 text-primary">
-            <Calculator className="h-5 w-5" />
-            <span className="font-semibold">UK Tax Calculator</span>
-          </div>
-        </div>
-      </header>
-
       {/* Content */}
       <main className="max-w-4xl mx-auto px-4 py-8 space-y-12">
         {/* Title Section */}
