@@ -39,7 +39,9 @@ import {
   Info,
   Building2,
   Calendar,
+  HelpCircle,
 } from 'lucide-react';
+import Link from 'next/link';
 
 const periodLabels: Record<Period, string> = {
   year: 'Yearly',
@@ -181,7 +183,7 @@ export default function TaxCalculator() {
       <div className="min-h-screen bg-background p-4 md:p-8">
         <div className="max-w-5xl mx-auto space-y-6">
           {/* Header */}
-          <div className="text-center space-y-2">
+          <div className="text-center space-y-3">
             <div className="inline-flex items-center justify-center gap-2 text-primary">
               <Calculator className="h-8 w-8" />
               <h1 className="text-3xl font-bold">
@@ -192,6 +194,13 @@ export default function TaxCalculator() {
               Calculate your net income after Income Tax and National Insurance
               for the 2025/26 tax year
             </p>
+            <Link
+              href="/how-it-works"
+              className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
+            >
+              <HelpCircle className="h-4 w-4" />
+              How it works
+            </Link>
           </div>
 
           <div className="grid gap-6 lg:grid-cols-2">
@@ -504,13 +513,21 @@ export default function TaxCalculator() {
 
           {/* Footer */}
           <Card className="bg-muted/50">
-            <CardContent className="py-4">
+            <CardContent className="py-4 space-y-2">
               <p className="text-sm text-muted-foreground text-center">
                 This calculator provides estimates based on HMRC 2025/26 tax
                 rates. For accurate calculations, please consult a tax
                 professional or use HMRC official tools. Student loan
                 repayments, pension contributions, and other deductions are not
                 included.
+              </p>
+              <p className="text-center">
+                <Link
+                  href="/how-it-works"
+                  className="text-sm text-primary hover:underline"
+                >
+                  Learn more about how we calculate your take home pay
+                </Link>
               </p>
             </CardContent>
           </Card>
