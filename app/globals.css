@@ -173,3 +173,9 @@
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
 }
+
+/* Prevent layout shift when Radix UI locks scroll */
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}

@@ -4,6 +4,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { LocaleProvider } from '@/contexts/LocaleContext';
 import { NavigationHeader } from '@/components/NavigationHeader';
+import { ScrollLockFix } from '@/components/ScrollLockFix';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -44,10 +45,11 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
       >
         <LocaleProvider>
           <ThemeProvider>
+            <ScrollLockFix />
             <NavigationHeader />
             {children}
           </ThemeProvider>
