@@ -1,6 +1,5 @@
 {
   "common": {
-    "appName": "UK Vergi Hesaplayıcı",
     "appDescription": "Net Maaş Tahmini",
     "backToCalculator": "Hesaplayıcıya Dön",
     "toggleDarkMode": "Karanlık modu aç/kapat"
@@ -14,8 +13,6 @@
     "salary": "Yıllık Maaş",
     "calculate": "Hesapla",
     "pageTitle": "UK Net Maaş Hesaplayıcı",
-    "pageSubtitle": "2025/26 vergi yılı için Gelir Vergisi ve Ulusal Sigorta sonrası net gelirinizi hesaplayın",
-    "howItWorksLink": "Nasıl çalışır",
     "incomeDetails": "Gelir Bilgileri",
     "incomeDetailsDescription": "Brüt gelirinizi girin ve seçenekleri belirleyin",
     "grossIncome": "Brüt Gelir",
@@ -41,7 +38,6 @@
     "region": "Bölge",
     "enterGrossIncome": "Sonuçları görmek için brüt gelirinizi girin",
     "footerDisclaimer": "Bu hesaplayıcı HMRC 2025/26 vergi oranlarına dayalı tahminler sunar. Doğru hesaplamalar için lütfen bir vergi uzmanına danışın veya HMRC resmi araçlarını kullanın. Öğrenci kredisi geri ödemeleri, emeklilik katkıları ve diğer kesintiler dahil değildir.",
-    "learnMoreLink": "Net maaş hesaplamamız hakkında daha fazla bilgi edinin",
     "periods": {
       "year": "Yıllık",
       "month": "Aylık",

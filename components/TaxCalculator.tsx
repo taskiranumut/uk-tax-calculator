@@ -39,9 +39,7 @@ import {
   Info,
   Building2,
   Calendar,
-  HelpCircle,
 } from 'lucide-react';
-import Link from 'next/link';
 
 const niCategories: NICategory[] = [
   'A',
@@ -171,26 +169,6 @@ export default function TaxCalculator() {
     <TooltipProvider>
       <div className="min-h-screen bg-background p-4 md:p-8">
         <div className="max-w-5xl mx-auto space-y-6">
-          {/* Header */}
-          <div className="text-center space-y-3">
-            <div className="inline-flex items-center justify-center gap-2">
-              <Calculator className="h-8 w-8 text-primary" />
-              <h1 className="text-3xl font-bold text-foreground">
-                {t('calculator.pageTitle')}
-              </h1>
-            </div>
-            <p className="text-muted-foreground">
-              {t('calculator.pageSubtitle')}
-            </p>
-            <Link
-              href="/how-it-works"
-              className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
-            >
-              <HelpCircle className="h-4 w-4" />
-              {t('calculator.howItWorksLink')}
-            </Link>
-          </div>
-
           <div className="grid gap-6 lg:grid-cols-2">
             {/* Input Section */}
             <Card>
@@ -504,14 +482,6 @@ export default function TaxCalculator() {
             <CardContent className="py-4 space-y-2">
               <p className="text-sm text-muted-foreground text-center">
                 {t('calculator.footerDisclaimer')}
-              </p>
-              <p className="text-center">
-                <Link
-                  href="/how-it-works"
-                  className="text-sm text-primary hover:underline"
-                >
-                  {t('calculator.learnMoreLink')}
-                </Link>
               </p>
             </CardContent>
           </Card>

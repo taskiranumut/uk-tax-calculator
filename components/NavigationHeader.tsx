@@ -1,7 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { Calculator, Moon, Sun, Globe, ChevronDown } from 'lucide-react';
+import {
+  Calculator,
+  Moon,
+  Sun,
+  Globe,
+  ChevronDown,
+  HelpCircle,
+} from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import {
   DropdownMenu,
@@ -55,7 +62,7 @@ export function NavigationHeader({
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-lg leading-tight text-foreground">
-                {t('common.appName')}
+                {t('calculator.pageTitle')}
               </span>
               <span className="text-xs text-muted-foreground leading-tight">
                 {t('common.appDescription')}
@@ -65,6 +72,17 @@ export function NavigationHeader({
 
           {/* Right side - Controls */}
           <div className="flex items-center gap-4">
+            {/* How It Works Link */}
+            <Link
+              href="/how-it-works"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors text-sm text-foreground"
+            >
+              <HelpCircle className="h-4 w-4" />
+              <span className="hidden sm:inline">
+                {t('navigation.howItWorks')}
+              </span>
+            </Link>
+
             {/* Language Selector */}
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors text-sm text-foreground">
