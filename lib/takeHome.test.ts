@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { estimateTakeHome, TakeHomeInput, TakeHomeResult } from './takeHome';
+import {
+  estimateTakeHome,
+  estimateGrossFromNet,
+  TakeHomeInput,
+  NetToGrossInput,
+  TakeHomeResult,
+} from './takeHome';
 
 describe('estimateTakeHome', () => {
   // Helper to compare numbers with tolerance for floating point
@@ -491,6 +497,311 @@ describe('estimateTakeHome', () => {
     it('should default to category A', () => {
       const result = estimateTakeHome({
         gross: 50000,
+        period: 'year',
+      });
+
+      expect(result.meta.niCategory).toBe('A');
+    });
+  });
+});
+
+describe('estimateGrossFromNet', () => {
+  // Helper to compare numbers with tolerance for floating point
+  const expectClose = (actual: number, expected: number, tolerance = 1) => {
+    expect(Math.abs(actual - expected)).toBeLessThanOrEqual(tolerance);
+  };
+
+  describe('Basic net to gross calculation', () => {
+    it('should return zero gross for zero net', () => {
+      const result = estimateGrossFromNet({
+        net: 0,
+        period: 'year',
+      });
+
+      expect(result.annual.gross).toBe(0);
+      expect(result.annual.takeHome).toBe(0);
+    });
+
+    it('should find correct gross for £25,119.60 net (known from gross £30,000)', () => {
+      // From estimateTakeHome test: £30,000 gross = £25,119.60 net
+      const result = estimateGrossFromNet({
+        net: 25119.6,
+        period: 'year',
+      });
+
+      expectClose(result.annual.gross, 30000, 1);
+      expectClose(result.annual.takeHome, 25119.6, 1);
+    });
+
+    it('should find correct gross for £45,357.40 net (known from gross £60,000)', () => {
+      // From estimateTakeHome test: £60,000 gross = £45,357.40 net
+      const result = estimateGrossFromNet({
+        net: 45357.4,
+        period: 'year',
+      });
+
+      expectClose(result.annual.gross, 60000, 1);
+      expectClose(result.annual.takeHome, 45357.4, 1);
+    });
+
+    it('should handle income below personal allowance threshold', () => {
+      const result = estimateGrossFromNet({
+        net: 12000,
+        period: 'year',
+      });
+
+      // Below threshold, net equals gross (no tax, no NI)
+      expect(result.annual.gross).toBe(12000);
+      expect(result.annual.takeHome).toBe(12000);
+      expect(result.annual.incomeTax).toBe(0);
+    });
+  });
+
+  describe('Roundtrip consistency', () => {
+    it('should be consistent with estimateTakeHome for basic rate income', () => {
+      const grossOriginal = 35000;
+      const forwardResult = estimateTakeHome({
+        gross: grossOriginal,
+        period: 'year',
+      });
+
+      const reverseResult = estimateGrossFromNet({
+        net: forwardResult.annual.takeHome,
+        period: 'year',
+      });
+
+      expectClose(reverseResult.annual.gross, grossOriginal, 1);
+    });
+
+    it('should be consistent with estimateTakeHome for higher rate income', () => {
+      const grossOriginal = 75000;
+      const forwardResult = estimateTakeHome({
+        gross: grossOriginal,
+        period: 'year',
+      });
+
+      const reverseResult = estimateGrossFromNet({
+        net: forwardResult.annual.takeHome,
+        period: 'year',
+      });
+
+      expectClose(reverseResult.annual.gross, grossOriginal, 1);
+    });
+
+    it('should be consistent with estimateTakeHome for additional rate income', () => {
+      const grossOriginal = 150000;
+      const forwardResult = estimateTakeHome({
+        gross: grossOriginal,
+        period: 'year',
+      });
+
+      const reverseResult = estimateGrossFromNet({
+        net: forwardResult.annual.takeHome,
+        period: 'year',
+      });
+
+      expectClose(reverseResult.annual.gross, grossOriginal, 1);
+    });
+  });
+
+  describe('Scotland jurisdiction', () => {
+    it('should handle Scottish tax rates for net to gross', () => {
+      const grossOriginal = 50000;
+      const forwardResult = estimateTakeHome({
+        gross: grossOriginal,
+        period: 'year',
+        jurisdiction: 'scotland',
+      });
+
+      const reverseResult = estimateGrossFromNet({
+        net: forwardResult.annual.takeHome,
+        period: 'year',
+        jurisdiction: 'scotland',
+      });
+
+      expectClose(reverseResult.annual.gross, grossOriginal, 1);
+      expect(reverseResult.meta.jurisdiction).toBe('scotland');
+    });
+  });
+
+  describe('Different NI categories', () => {
+    it('should handle category C (no NI) for net to gross', () => {
+      const grossOriginal = 40000;
+      const forwardResult = estimateTakeHome({
+        gross: grossOriginal,
+        period: 'year',
+        niCategory: 'C',
+      });
+
+      const reverseResult = estimateGrossFromNet({
+        net: forwardResult.annual.takeHome,
+        period: 'year',
+        niCategory: 'C',
+      });
+
+      expectClose(reverseResult.annual.gross, grossOriginal, 1);
+      expect(reverseResult.meta.niCategory).toBe('C');
+    });
+  });
+
+  describe('Tax codes', () => {
+    it('should handle BR tax code for net to gross', () => {
+      const grossOriginal = 25000;
+      const forwardResult = estimateTakeHome({
+        gross: grossOriginal,
+        period: 'year',
+        taxCode: 'BR',
+      });
+
+      const reverseResult = estimateGrossFromNet({
+        net: forwardResult.annual.takeHome,
+        period: 'year',
+        taxCode: 'BR',
+      });
+
+      expectClose(reverseResult.annual.gross, grossOriginal, 1);
+    });
+
+    it('should handle NT tax code for net to gross', () => {
+      const grossOriginal = 30000;
+      const forwardResult = estimateTakeHome({
+        gross: grossOriginal,
+        period: 'year',
+        taxCode: 'NT',
+      });
+
+      const reverseResult = estimateGrossFromNet({
+        net: forwardResult.annual.takeHome,
+        period: 'year',
+        taxCode: 'NT',
+      });
+
+      expectClose(reverseResult.annual.gross, grossOriginal, 1);
+    });
+
+    it('should detect Scotland from S prefix in tax code', () => {
+      const result = estimateGrossFromNet({
+        net: 30000,
+        period: 'year',
+        taxCode: 'S1257L',
+      });
+
+      expect(result.meta.jurisdiction).toBe('scotland');
+      expect(result.meta.taxCodeUsed).toBe('S1257L');
+    });
+  });
+
+  describe('Period conversions', () => {
+    it('should handle monthly net input', () => {
+      const grossOriginal = 36000;
+      const forwardResult = estimateTakeHome({
+        gross: grossOriginal,
+        period: 'year',
+      });
+
+      const monthlyNet = forwardResult.annual.takeHome / 12;
+
+      const reverseResult = estimateGrossFromNet({
+        net: monthlyNet,
+        period: 'month',
+      });
+
+      expectClose(reverseResult.annual.gross, grossOriginal, 1);
+      expect(reverseResult.perPeriod.period).toBe('month');
+    });
+
+    it('should handle weekly net input', () => {
+      const grossOriginal = 52000;
+      const forwardResult = estimateTakeHome({
+        gross: grossOriginal,
+        period: 'year',
+      });
+
+      const weeklyNet = forwardResult.annual.takeHome / 52;
+
+      const reverseResult = estimateGrossFromNet({
+        net: weeklyNet,
+        period: 'week',
+      });
+
+      expectClose(reverseResult.annual.gross, grossOriginal, 1);
+      expect(reverseResult.perPeriod.period).toBe('week');
+    });
+  });
+
+  describe('Edge cases', () => {
+    it('should handle very high net income', () => {
+      const grossOriginal = 500000;
+      const forwardResult = estimateTakeHome({
+        gross: grossOriginal,
+        period: 'year',
+      });
+
+      const reverseResult = estimateGrossFromNet({
+        net: forwardResult.annual.takeHome,
+        period: 'year',
+      });
+
+      expectClose(reverseResult.annual.gross, grossOriginal, 5);
+    });
+
+    it('should handle income at personal allowance boundary', () => {
+      const grossOriginal = 12570;
+      const forwardResult = estimateTakeHome({
+        gross: grossOriginal,
+        period: 'year',
+      });
+
+      const reverseResult = estimateGrossFromNet({
+        net: forwardResult.annual.takeHome,
+        period: 'year',
+      });
+
+      expectClose(reverseResult.annual.gross, grossOriginal, 1);
+    });
+
+    it('should handle income at taper threshold (£100,000)', () => {
+      const grossOriginal = 100000;
+      const forwardResult = estimateTakeHome({
+        gross: grossOriginal,
+        period: 'year',
+      });
+
+      const reverseResult = estimateGrossFromNet({
+        net: forwardResult.annual.takeHome,
+        period: 'year',
+      });
+
+      expectClose(reverseResult.annual.gross, grossOriginal, 1);
+    });
+  });
+
+  describe('Meta information', () => {
+    it('should include correct meta information', () => {
+      const result = estimateGrossFromNet({
+        net: 35000,
+        period: 'year',
+        jurisdiction: 'scotland',
+        niCategory: 'M',
+      });
+
+      expect(result.meta.jurisdiction).toBe('scotland');
+      expect(result.meta.niCategory).toBe('M');
+      expect(result.meta.calculationTaxYear).toBe('2025/26');
+    });
+
+    it('should default to ruk jurisdiction', () => {
+      const result = estimateGrossFromNet({
+        net: 35000,
+        period: 'year',
+      });
+
+      expect(result.meta.jurisdiction).toBe('ruk');
+    });
+
+    it('should default to category A', () => {
+      const result = estimateGrossFromNet({
+        net: 35000,
         period: 'year',
       });
 

@@ -2,6 +2,7 @@
 
 export type Period = 'year' | 'month' | 'week' | 'day';
 export type Jurisdiction = 'ruk' | 'scotland'; // ruk: England + Wales + Northern Ireland
+export type CalculationDirection = 'grossToNet' | 'netToGross';
 export type NICategory =
   | 'A'
   | 'B'
@@ -21,9 +22,18 @@ export type NICategory =
   | 'Z';
 
 export interface TakeHomeInput {
-  gross: number; // seçilen period için brüt
-  period: Period; // gross hangi periyotta
+  gross: number; // seçilen period için brüt (grossToNet modunda kullanılır)
+  period: Period; // gross/net hangi periyotta
   jurisdiction?: Jurisdiction; // default: ruk (tax code S ise otomatik scotland seçilebilir)
+  taxCode?: string; // örn: 1257L, S1257L, BR, D0, D1, 0T, NT
+  niCategory?: NICategory; // default: A
+  daysPerYear?: number; // period day ise default 260
+}
+
+export interface NetToGrossInput {
+  net: number; // seçilen period için net maaş
+  period: Period; // net hangi periyotta
+  jurisdiction?: Jurisdiction; // default: ruk
   taxCode?: string; // örn: 1257L, S1257L, BR, D0, D1, 0T, NT
   niCategory?: NICategory; // default: A
   daysPerYear?: number; // period day ise default 260
@@ -396,6 +406,120 @@ export function estimateTakeHome(input: TakeHomeInput): TakeHomeResult {
       taxCodeUsed: parsed.taxCodeUsed,
       calculationTaxYear: '2025/26',
     },
+  };
+}
+
+// ---------------- Net to Gross calculation (reverse) ----------------
+
+/**
+ * Calculates gross salary from net salary using binary search.
+ * Since tax calculation is progressive, we need an iterative approach.
+ */
+export function estimateGrossFromNet(input: NetToGrossInput): TakeHomeResult {
+  const daysPerYear = input.daysPerYear ?? 260;
+  const annualNetTarget = annualise(input.net, input.period, daysPerYear);
+
+  const parsed = parseTaxCode(input.taxCode);
+  const jurisdiction: Jurisdiction =
+    input.jurisdiction ?? parsed.impliedJurisdiction ?? 'ruk';
+  const niCategory: NICategory = input.niCategory ?? 'A';
+
+  // Edge case: zero net means zero gross
+  if (annualNetTarget <= 0) {
+    return {
+      annual: {
+        gross: 0,
+        personalAllowance: PA_STANDARD_GBP,
+        taxableIncome: 0,
+        incomeTax: 0,
+        incomeTaxBreakdown: [],
+        nationalInsurance: 0,
+        takeHome: 0,
+      },
+      perPeriod: {
+        period: input.period,
+        gross: 0,
+        incomeTax: 0,
+        nationalInsurance: 0,
+        takeHome: 0,
+      },
+      meta: {
+        jurisdiction,
+        niCategory,
+        taxCodeUsed: parsed.taxCodeUsed,
+        calculationTaxYear: '2025/26',
+      },
+    };
+  }
+
+  // Binary search to find gross that produces target net
+  // Lower bound: net (gross can't be less than net)
+  // Upper bound: net * 3 (even at 45% tax + 2% NI, net is at least ~50% of gross)
+  let low = annualNetTarget;
+  let high = annualNetTarget * 3;
+  let bestResult: TakeHomeResult | null = null;
+  const tolerance = 0.01; // £0.01 precision
+  const maxIterations = 100;
+
+  for (let i = 0; i < maxIterations; i++) {
+    const mid = (low + high) / 2;
+
+    const result = estimateTakeHome({
+      gross: mid,
+      period: 'year',
+      jurisdiction,
+      taxCode: input.taxCode,
+      niCategory,
+      daysPerYear,
+    });
+
+    const diff = result.annual.takeHome - annualNetTarget;
+
+    if (Math.abs(diff) < tolerance) {
+      bestResult = result;
+      break;
+    }
+
+    if (diff < 0) {
+      // Net is too low, need higher gross
+      low = mid;
+    } else {
+      // Net is too high, need lower gross
+      high = mid;
+    }
+
+    bestResult = result;
+  }
+
+  // At this point, bestResult should be very close
+  if (!bestResult) {
+    throw new Error('Failed to converge on gross from net calculation');
+  }
+
+  // Convert to requested period
+  const perGross = round2(
+    deAnnualise(bestResult.annual.gross, input.period, daysPerYear)
+  );
+  const perIncomeTax = round2(
+    deAnnualise(bestResult.annual.incomeTax, input.period, daysPerYear)
+  );
+  const perNI = round2(
+    deAnnualise(bestResult.annual.nationalInsurance, input.period, daysPerYear)
+  );
+  const perTakeHome = round2(
+    deAnnualise(bestResult.annual.takeHome, input.period, daysPerYear)
+  );
+
+  return {
+    annual: bestResult.annual,
+    perPeriod: {
+      period: input.period,
+      gross: perGross,
+      incomeTax: perIncomeTax,
+      nationalInsurance: perNI,
+      takeHome: perTakeHome,
+    },
+    meta: bestResult.meta,
   };
 }
 

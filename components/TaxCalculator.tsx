@@ -3,10 +3,12 @@
 import { useState, useMemo } from 'react';
 import {
   estimateTakeHome,
+  estimateGrossFromNet,
   Period,
   Jurisdiction,
   NICategory,
   TakeHomeResult,
+  CalculationDirection,
 } from '@/lib/takeHome';
 import { useTranslations } from '@/contexts/LocaleContext';
 import {
@@ -39,6 +41,7 @@ import {
   Info,
   Building2,
   Calendar,
+  ArrowRightLeft,
 } from 'lucide-react';
 
 const niCategories: NICategory[] = [
@@ -120,29 +123,41 @@ function ResultCard({
 
 export default function TaxCalculator() {
   const t = useTranslations();
-  const [grossInput, setGrossInput] = useState<string>('30000');
+  const [amountInput, setAmountInput] = useState<string>('30000');
+  const [calculationDirection, setCalculationDirection] =
+    useState<CalculationDirection>('grossToNet');
   const [period, setPeriod] = useState<Period>('year');
   const [outputPeriod, setOutputPeriod] = useState<Period>('year');
   const [jurisdiction, setJurisdiction] = useState<Jurisdiction>('ruk');
   const [taxCode, setTaxCode] = useState<string>('');
   const [niCategory, setNiCategory] = useState<NICategory>('A');
 
-  const gross = useMemo(() => {
-    const parsed = parseFloat(grossInput.replace(/,/g, ''));
+  const amount = useMemo(() => {
+    const parsed = parseFloat(amountInput.replace(/,/g, ''));
     return isNaN(parsed) || parsed < 0 ? 0 : parsed;
-  }, [grossInput]);
+  }, [amountInput]);
 
   const result: TakeHomeResult | null = useMemo(() => {
-    if (gross === 0) return null;
+    if (amount === 0) return null;
 
-    return estimateTakeHome({
-      gross,
-      period,
-      jurisdiction,
-      taxCode: taxCode || undefined,
-      niCategory,
-    });
-  }, [gross, period, jurisdiction, taxCode, niCategory]);
+    if (calculationDirection === 'grossToNet') {
+      return estimateTakeHome({
+        gross: amount,
+        period,
+        jurisdiction,
+        taxCode: taxCode || undefined,
+        niCategory,
+      });
+    } else {
+      return estimateGrossFromNet({
+        net: amount,
+        period,
+        jurisdiction,
+        taxCode: taxCode || undefined,
+        niCategory,
+      });
+    }
+  }, [amount, calculationDirection, period, jurisdiction, taxCode, niCategory]);
 
   // Convert results to output period
   const outputResult = useMemo(() => {
@@ -182,19 +197,61 @@ export default function TaxCalculator() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* Gross Income */}
+                {/* Calculation Direction Toggle */}
                 <div className="space-y-2">
-                  <Label htmlFor="gross">{t('calculator.grossIncome')}</Label>
+                  <Label className="flex items-center gap-2">
+                    <ArrowRightLeft className="h-4 w-4" />
+                    {t('calculator.calculationDirection')}
+                  </Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setCalculationDirection('grossToNet')}
+                      className={`flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-all ${
+                        calculationDirection === 'grossToNet'
+                          ? 'border-primary bg-primary/10 text-primary'
+                          : 'border-muted bg-muted/50 hover:border-muted-foreground/30'
+                      }`}
+                    >
+                      <span className="font-medium text-sm">
+                        {t('calculator.grossToNet')}
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setCalculationDirection('netToGross')}
+                      className={`flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-all ${
+                        calculationDirection === 'netToGross'
+                          ? 'border-primary bg-primary/10 text-primary'
+                          : 'border-muted bg-muted/50 hover:border-muted-foreground/30'
+                      }`}
+                    >
+                      <span className="font-medium text-sm">
+                        {t('calculator.netToGross')}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+
+                <Separator />
+
+                {/* Income Input */}
+                <div className="space-y-2">
+                  <Label htmlFor="amount">
+                    {calculationDirection === 'grossToNet'
+                      ? t('calculator.grossIncome')
+                      : t('calculator.netIncome')}
+                  </Label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                       £
                     </span>
                     <Input
-                      id="gross"
+                      id="amount"
                       type="text"
                       inputMode="decimal"
-                      value={grossInput}
-                      onChange={(e) => setGrossInput(e.target.value)}
+                      value={amountInput}
+                      onChange={(e) => setAmountInput(e.target.value)}
                       className="pl-7 text-lg"
                       placeholder="30000"
                     />
@@ -470,7 +527,11 @@ export default function TaxCalculator() {
                 ) : (
                   <div className="text-center py-12 text-muted-foreground">
                     <Calculator className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                    <p>{t('calculator.enterGrossIncome')}</p>
+                    <p>
+                      {calculationDirection === 'grossToNet'
+                        ? t('calculator.enterGrossIncome')
+                        : t('calculator.enterNetIncome')}
+                    </p>
                   </div>
                 )}
               </CardContent>
