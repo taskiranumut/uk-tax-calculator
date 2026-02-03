@@ -205,7 +205,7 @@ export default function HowItWorksPage() {
       <main className="max-w-4xl mx-auto px-4 py-8 space-y-12">
         {/* Title Section */}
         <div className="space-y-4">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
             How we estimate take home pay
           </h1>
           <p className="text-lg text-muted-foreground">
@@ -246,14 +246,16 @@ export default function HowItWorksPage() {
 
         {/* Official Rates Section */}
         <section className="space-y-6">
-          <h2 className="text-2xl font-bold">
+          <h2 className="text-2xl font-bold text-foreground">
             Official rates used (2025 to 2026)
           </h2>
 
           {/* Personal Allowance */}
           <Card>
             <CardContent className="p-6 space-y-4">
-              <h3 className="text-xl font-semibold">Personal Allowance</h3>
+              <h3 className="text-xl font-semibold text-foreground">
+                Personal Allowance
+              </h3>
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-primary font-bold mt-0.5">•</span>
@@ -281,7 +283,7 @@ export default function HowItWorksPage() {
           {/* England & NI Tax */}
           <Card>
             <CardContent className="p-6 space-y-4">
-              <h3 className="text-xl font-semibold">
+              <h3 className="text-xl font-semibold text-foreground">
                 Income Tax (England and Northern Ireland)
               </h3>
               <p className="text-muted-foreground text-sm">
@@ -313,7 +315,9 @@ export default function HowItWorksPage() {
           {/* Scottish Tax */}
           <Card>
             <CardContent className="p-6 space-y-4">
-              <h3 className="text-xl font-semibold">Scottish Income Tax</h3>
+              <h3 className="text-xl font-semibold text-foreground">
+                Scottish Income Tax
+              </h3>
               <p className="text-muted-foreground text-sm">
                 Rates apply to your <strong>taxable income</strong> above the
                 Personal Allowance
@@ -358,7 +362,7 @@ export default function HowItWorksPage() {
           {/* National Insurance */}
           <Card>
             <CardContent className="p-6 space-y-4">
-              <h3 className="text-xl font-semibold">
+              <h3 className="text-xl font-semibold text-foreground">
                 Employee National Insurance (Class 1, primary, NI category A)
               </h3>
               <p className="text-muted-foreground text-sm">
@@ -418,7 +422,7 @@ export default function HowItWorksPage() {
 
         {/* Calculation Method */}
         <section className="space-y-6">
-          <h2 className="text-2xl font-bold">
+          <h2 className="text-2xl font-bold text-foreground">
             Calculation method (annual basis)
           </h2>
           <Card>
@@ -458,7 +462,9 @@ export default function HowItWorksPage() {
 
         {/* Worked Examples */}
         <section className="space-y-6">
-          <h2 className="text-2xl font-bold">Worked examples</h2>
+          <h2 className="text-2xl font-bold text-foreground">
+            Worked examples
+          </h2>
           <p className="text-muted-foreground">
             Single job, NI category A, no other deductions
           </p>

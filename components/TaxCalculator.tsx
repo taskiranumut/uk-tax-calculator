@@ -184,9 +184,9 @@ export default function TaxCalculator() {
         <div className="max-w-5xl mx-auto space-y-6">
           {/* Header */}
           <div className="text-center space-y-3">
-            <div className="inline-flex items-center justify-center gap-2 text-primary">
-              <Calculator className="h-8 w-8" />
-              <h1 className="text-3xl font-bold">
+            <div className="inline-flex items-center justify-center gap-2">
+              <Calculator className="h-8 w-8 text-primary" />
+              <h1 className="text-3xl font-bold text-foreground">
                 UK Take Home Pay Calculator
               </h1>
             </div>

@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useTheme } from '@/components/ThemeProvider';
 
 interface NavigationHeaderProps {
   showBackButton?: boolean;
@@ -22,7 +23,7 @@ export function NavigationHeader({
   backButtonHref = '/',
   backButtonText = 'Back to Calculator',
 }: NavigationHeaderProps) {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   const [currentLanguage, setCurrentLanguage] = useState<'tr' | 'en'>('en');
 
   const languages = [
@@ -45,7 +46,7 @@ export function NavigationHeader({
               <Calculator className="h-5 w-5" />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-lg leading-tight">
+              <span className="font-bold text-lg leading-tight text-foreground">
                 UK Tax Calculator
               </span>
               <span className="text-xs text-muted-foreground leading-tight">
@@ -58,7 +59,7 @@ export function NavigationHeader({
           <div className="flex items-center gap-4">
             {/* Language Selector */}
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors text-sm">
+              <DropdownMenuTrigger className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors text-sm text-foreground">
                 <Globe className="h-4 w-4" />
                 <span className="hidden sm:inline">{currentLang?.flag}</span>
                 <span className="hidden md:inline">{currentLang?.label}</span>
@@ -80,13 +81,21 @@ export function NavigationHeader({
 
             {/* Dark Mode Toggle */}
             <div className="flex items-center gap-2">
-              <Sun className="h-4 w-4 text-muted-foreground" />
+              <Sun
+                className={`h-4 w-4 ${
+                  theme === 'light' ? 'text-primary' : 'text-muted-foreground'
+                }`}
+              />
               <Switch
-                checked={isDarkMode}
-                onCheckedChange={setIsDarkMode}
+                checked={theme === 'dark'}
+                onCheckedChange={toggleTheme}
                 aria-label="Toggle dark mode"
               />
-              <Moon className="h-4 w-4 text-muted-foreground" />
+              <Moon
+                className={`h-4 w-4 ${
+                  theme === 'dark' ? 'text-primary' : 'text-muted-foreground'
+                }`}
+              />
             </div>
           </div>
         </div>
