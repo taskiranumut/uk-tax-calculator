@@ -202,7 +202,7 @@ export default function HowItWorksPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-card">
+      <header className="bg-card">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link
             href="/"
