@@ -1,3 +1,5 @@
+import TaxCalculator from '@/components/TaxCalculator';
+
 export default function Home() {
-  return <div></div>;
+  return <TaxCalculator />;
 }
