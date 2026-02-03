@@ -1,13 +1,10 @@
+'use client';
+
 import Link from 'next/link';
-import { ArrowLeft, ExternalLink, Calculator } from 'lucide-react';
+import { ExternalLink, Calculator } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-
-export const metadata = {
-  title: 'How It Works - UK Take Home Pay Calculator',
-  description:
-    'Learn how we calculate your estimated take home pay based on HMRC 2025/26 tax rates.',
-};
+import { useTranslations } from '@/contexts/LocaleContext';
 
 function SourceLink({
   href,
@@ -77,6 +74,7 @@ function ExampleCard({
   englandTaxBreakdown,
   scotlandTaxBreakdown,
   niBreakdown,
+  t,
 }: {
   title: string;
   gross: string;
@@ -90,23 +88,28 @@ function ExampleCard({
   englandTaxBreakdown: { band: string; amount: string }[];
   scotlandTaxBreakdown: { band: string; amount: string }[];
   niBreakdown: { band: string; amount: string }[];
+  t: (key: string) => string;
 }) {
   return (
     <Card className="overflow-hidden">
       <div className="bg-primary text-primary-foreground px-6 py-4">
         <h4 className="font-semibold text-lg">{title}</h4>
         <p className="text-primary-foreground/80 text-sm">
-          Gross income: {gross}
+          {t('howItWorks.exampleCard.grossIncome')}: {gross}
         </p>
       </div>
       <CardContent className="p-6 space-y-6">
         <div className="grid md:grid-cols-2 gap-4 text-sm">
           <div>
-            <span className="text-muted-foreground">Personal Allowance:</span>
+            <span className="text-muted-foreground">
+              {t('howItWorks.exampleCard.personalAllowance')}:
+            </span>
             <span className="ml-2 font-medium">{personalAllowance}</span>
           </div>
           <div>
-            <span className="text-muted-foreground">Taxable Income:</span>
+            <span className="text-muted-foreground">
+              {t('howItWorks.exampleCard.taxableIncome')}:
+            </span>
             <span className="ml-2 font-medium">{taxableIncome}</span>
           </div>
         </div>
@@ -114,10 +117,9 @@ function ExampleCard({
         <Separator />
 
         <div className="grid lg:grid-cols-2 gap-6">
-          {/* England & NI Tax */}
           <div className="space-y-3">
             <h5 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
-              England & Northern Ireland Tax
+              {t('howItWorks.exampleCard.englandNiTax')}
             </h5>
             <div className="space-y-1 text-sm">
               {englandTaxBreakdown.map((item, i) => (
@@ -127,16 +129,15 @@ function ExampleCard({
                 </div>
               ))}
               <div className="flex justify-between font-semibold pt-2 border-t">
-                <span>Total Income Tax</span>
+                <span>{t('howItWorks.exampleCard.totalIncomeTax')}</span>
                 <span>{englandTax}</span>
               </div>
             </div>
           </div>
 
-          {/* Scotland Tax */}
           <div className="space-y-3">
             <h5 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
-              Scottish Income Tax
+              {t('howItWorks.exampleCard.scotlandTax')}
             </h5>
             <div className="space-y-1 text-sm">
               {scotlandTaxBreakdown.map((item, i) => (
@@ -146,7 +147,7 @@ function ExampleCard({
                 </div>
               ))}
               <div className="flex justify-between font-semibold pt-2 border-t">
-                <span>Total Income Tax</span>
+                <span>{t('howItWorks.exampleCard.totalIncomeTax')}</span>
                 <span>{scotlandTax}</span>
               </div>
             </div>
@@ -155,10 +156,9 @@ function ExampleCard({
 
         <Separator />
 
-        {/* National Insurance */}
         <div className="space-y-3">
           <h5 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
-            National Insurance (UK-wide, Category A)
+            {t('howItWorks.exampleCard.nationalInsurance')}
           </h5>
           <div className="space-y-1 text-sm max-w-md">
             {niBreakdown.map((item, i) => (
@@ -168,7 +168,7 @@ function ExampleCard({
               </div>
             ))}
             <div className="flex justify-between font-semibold pt-2 border-t">
-              <span>Total NI</span>
+              <span>{t('howItWorks.exampleCard.totalNi')}</span>
               <span>{ni}</span>
             </div>
           </div>
@@ -176,17 +176,16 @@ function ExampleCard({
 
         <Separator />
 
-        {/* Take Home Results */}
         <div className="grid md:grid-cols-2 gap-4">
           <div className="bg-muted rounded-lg p-4">
             <p className="text-sm text-muted-foreground mb-1">
-              England & N. Ireland Take Home
+              {t('howItWorks.exampleCard.englandTakeHome')}
             </p>
             <p className="text-2xl font-bold text-primary">{englandTakeHome}</p>
           </div>
           <div className="bg-muted rounded-lg p-4">
             <p className="text-sm text-muted-foreground mb-1">
-              Scotland Take Home
+              {t('howItWorks.exampleCard.scotlandTakeHome')}
             </p>
             <p className="text-2xl font-bold text-primary">
               {scotlandTakeHome}
@@ -199,213 +198,232 @@ function ExampleCard({
 }
 
 export default function HowItWorksPage() {
+  const t = useTranslations();
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Content */}
       <main className="max-w-4xl mx-auto px-4 py-8 space-y-12">
-        {/* Title Section */}
         <div className="space-y-4">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-            How we estimate take home pay
+            {t('howItWorks.title')}
           </h1>
           <p className="text-lg text-muted-foreground">
-            Tax year 6 April 2025 to 5 April 2026
+            {t('howItWorks.taxYear')}
           </p>
         </div>
 
-        {/* Intro */}
         <Card>
           <CardContent className="p-6 space-y-4">
-            <p>
-              This calculator provides an <strong>estimated</strong> take home
-              pay figure for a single employment, based on the UK rules for:
-            </p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t('howItWorks.intro.paragraph'),
+              }}
+            />
             <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-2">
-              <li>
-                Income Tax (England, Northern Ireland, Wales rates and bands) or
-                Scottish Income Tax (if applicable)
-              </li>
-              <li>
-                Employee National Insurance (Class 1, primary contribution)
-              </li>
+              <li>{t('howItWorks.intro.bullet1')}</li>
+              <li>{t('howItWorks.intro.bullet2')}</li>
             </ul>
             <div className="bg-muted/50 rounded-lg p-4 text-sm">
               <p className="font-medium mb-2">
-                This calculator assumes no other adjustments, for example:
+                {t('howItWorks.intro.assumesTitle')}
               </p>
               <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-                <li>Pension contributions (including salary sacrifice)</li>
-                <li>Student loan repayments</li>
-                <li>Benefits in kind</li>
-                <li>Charitable giving</li>
-                <li>Multiple jobs</li>
+                <li>{t('howItWorks.intro.assumes1')}</li>
+                <li>{t('howItWorks.intro.assumes2')}</li>
+                <li>{t('howItWorks.intro.assumes3')}</li>
+                <li>{t('howItWorks.intro.assumes4')}</li>
+                <li>{t('howItWorks.intro.assumes5')}</li>
               </ul>
             </div>
           </CardContent>
         </Card>
 
-        {/* Official Rates Section */}
         <section className="space-y-6">
           <h2 className="text-2xl font-bold text-foreground">
-            Official rates used (2025 to 2026)
+            {t('howItWorks.officialRates')}
           </h2>
 
-          {/* Personal Allowance */}
           <Card>
             <CardContent className="p-6 space-y-4">
               <h3 className="text-xl font-semibold text-foreground">
-                Personal Allowance
+                {t('howItWorks.personalAllowance.title')}
               </h3>
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-primary font-bold mt-0.5">•</span>
-                  <span>
-                    Standard Personal Allowance: <strong>£12,570</strong> per
-                    year
-                  </span>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: t('howItWorks.personalAllowance.standard'),
+                    }}
+                  />
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary font-bold mt-0.5">•</span>
-                  <span>
-                    If your adjusted net income is above{' '}
-                    <strong>£100,000</strong>, the Personal Allowance is reduced
-                    by <strong>£1 for every £2</strong> over £100,000, reaching{' '}
-                    <strong>£0 at £125,140</strong>
-                  </span>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: t('howItWorks.personalAllowance.reduction'),
+                    }}
+                  />
                 </li>
               </ul>
               <SourceLink href="https://www.gov.uk/income-tax-rates">
-                Income Tax rates and Personal Allowances - GOV.UK
+                {t('howItWorks.personalAllowance.sourceLink')}
               </SourceLink>
             </CardContent>
           </Card>
 
-          {/* England & NI Tax */}
           <Card>
             <CardContent className="p-6 space-y-4">
               <h3 className="text-xl font-semibold text-foreground">
-                Income Tax (England and Northern Ireland)
+                {t('howItWorks.englandNiTax.title')}
               </h3>
               <p className="text-muted-foreground text-sm">
-                Rates apply to your <strong>taxable income</strong> above the
-                Personal Allowance
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: t('howItWorks.englandNiTax.ratesApply'),
+                  }}
+                />
               </p>
               <RateTable
-                headers={['Band', 'Rate', 'Taxable Income']}
-                rows={[
-                  ['Basic rate', <strong key="b">20%</strong>, 'Up to £37,700'],
-                  [
-                    'Higher rate',
-                    <strong key="h">40%</strong>,
-                    '£37,701 to £125,140',
-                  ],
-                  [
-                    'Additional rate',
-                    <strong key="a">45%</strong>,
-                    'Above £125,140',
-                  ],
+                headers={[
+                  t('howItWorks.englandNiTax.band'),
+                  t('howItWorks.englandNiTax.rate'),
+                  t('howItWorks.englandNiTax.taxableIncome'),
                 ]}
-              />
-              <SourceLink href="https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2025-to-2026">
-                Rates and thresholds for employers 2025 to 2026 - GOV.UK
-              </SourceLink>
-            </CardContent>
-          </Card>
-
-          {/* Scottish Tax */}
-          <Card>
-            <CardContent className="p-6 space-y-4">
-              <h3 className="text-xl font-semibold text-foreground">
-                Scottish Income Tax
-              </h3>
-              <p className="text-muted-foreground text-sm">
-                Rates apply to your <strong>taxable income</strong> above the
-                Personal Allowance
-              </p>
-              <RateTable
-                headers={['Band', 'Rate', 'Taxable Income']}
                 rows={[
                   [
-                    'Starter rate',
-                    <strong key="s">19%</strong>,
-                    'Up to £2,827',
-                  ],
-                  [
-                    'Basic rate',
+                    t('howItWorks.englandNiTax.basicRate'),
                     <strong key="b">20%</strong>,
-                    '£2,828 to £14,921',
+                    t('howItWorks.englandNiTax.basicRange'),
                   ],
                   [
-                    'Intermediate rate',
-                    <strong key="i">21%</strong>,
-                    '£14,922 to £31,092',
+                    t('howItWorks.englandNiTax.higherRate'),
+                    <strong key="h">40%</strong>,
+                    t('howItWorks.englandNiTax.higherRange'),
                   ],
                   [
-                    'Higher rate',
-                    <strong key="h">42%</strong>,
-                    '£31,093 to £62,430',
-                  ],
-                  [
-                    'Advanced rate',
+                    t('howItWorks.englandNiTax.additionalRate'),
                     <strong key="a">45%</strong>,
-                    '£62,431 to £125,140',
+                    t('howItWorks.englandNiTax.additionalRange'),
                   ],
-                  ['Top rate', <strong key="t">48%</strong>, 'Above £125,140'],
                 ]}
               />
               <SourceLink href="https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2025-to-2026">
-                Rates and thresholds for employers 2025 to 2026 - GOV.UK
+                {t('howItWorks.englandNiTax.sourceLink')}
               </SourceLink>
             </CardContent>
           </Card>
 
-          {/* National Insurance */}
           <Card>
             <CardContent className="p-6 space-y-4">
               <h3 className="text-xl font-semibold text-foreground">
-                Employee National Insurance (Class 1, primary, NI category A)
+                {t('howItWorks.scotlandTax.title')}
               </h3>
               <p className="text-muted-foreground text-sm">
-                National Insurance is calculated on{' '}
-                <strong>gross earnings</strong> (not on taxable income)
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: t('howItWorks.scotlandTax.ratesApply'),
+                  }}
+                />
+              </p>
+              <RateTable
+                headers={[
+                  t('howItWorks.englandNiTax.band'),
+                  t('howItWorks.englandNiTax.rate'),
+                  t('howItWorks.englandNiTax.taxableIncome'),
+                ]}
+                rows={[
+                  [
+                    t('howItWorks.scotlandTax.starterRate'),
+                    <strong key="s">19%</strong>,
+                    t('howItWorks.scotlandTax.starterRange'),
+                  ],
+                  [
+                    t('howItWorks.scotlandTax.basicRate'),
+                    <strong key="b">20%</strong>,
+                    t('howItWorks.scotlandTax.basicRange'),
+                  ],
+                  [
+                    t('howItWorks.scotlandTax.intermediateRate'),
+                    <strong key="i">21%</strong>,
+                    t('howItWorks.scotlandTax.intermediateRange'),
+                  ],
+                  [
+                    t('howItWorks.scotlandTax.higherRate'),
+                    <strong key="h">42%</strong>,
+                    t('howItWorks.scotlandTax.higherRange'),
+                  ],
+                  [
+                    t('howItWorks.scotlandTax.advancedRate'),
+                    <strong key="a">45%</strong>,
+                    t('howItWorks.scotlandTax.advancedRange'),
+                  ],
+                  [
+                    t('howItWorks.scotlandTax.topRate'),
+                    <strong key="t">48%</strong>,
+                    t('howItWorks.scotlandTax.topRange'),
+                  ],
+                ]}
+              />
+              <SourceLink href="https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2025-to-2026">
+                {t('howItWorks.scotlandTax.sourceLink')}
+              </SourceLink>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6 space-y-4">
+              <h3 className="text-xl font-semibold text-foreground">
+                {t('howItWorks.nationalInsurance.title')}
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: t('howItWorks.nationalInsurance.ratesApply'),
+                  }}
+                />
               </p>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-medium mb-3">Thresholds</h4>
+                  <h4 className="font-medium mb-3">
+                    {t('howItWorks.nationalInsurance.thresholds')}
+                  </h4>
                   <ul className="space-y-2 text-sm">
                     <li className="flex justify-between">
                       <span className="text-muted-foreground">
-                        Primary Threshold
+                        {t('howItWorks.nationalInsurance.primaryThreshold')}
                       </span>
                       <strong>£12,570/year</strong>
                     </li>
                     <li className="flex justify-between">
                       <span className="text-muted-foreground">
-                        Upper Earnings Limit
+                        {t('howItWorks.nationalInsurance.upperEarningsLimit')}
                       </span>
                       <strong>£50,270/year</strong>
                     </li>
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-medium mb-3">Rates (Category A)</h4>
+                  <h4 className="font-medium mb-3">
+                    {t('howItWorks.nationalInsurance.rates')}
+                  </h4>
                   <ul className="space-y-2 text-sm">
                     <li className="flex justify-between">
                       <span className="text-muted-foreground">
-                        Up to £12,570
+                        {t('howItWorks.nationalInsurance.rate1Label')}
                       </span>
                       <strong>0%</strong>
                     </li>
                     <li className="flex justify-between">
                       <span className="text-muted-foreground">
-                        £12,570 to £50,270
+                        {t('howItWorks.nationalInsurance.rate2Label')}
                       </span>
                       <strong>8%</strong>
                     </li>
                     <li className="flex justify-between">
                       <span className="text-muted-foreground">
-                        Above £50,270
+                        {t('howItWorks.nationalInsurance.rate3Label')}
                       </span>
                       <strong>2%</strong>
                     </li>
@@ -414,39 +432,38 @@ export default function HowItWorksPage() {
               </div>
 
               <SourceLink href="https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2025-to-2026">
-                Rates and thresholds for employers 2025 to 2026 - GOV.UK
+                {t('howItWorks.nationalInsurance.sourceLink')}
               </SourceLink>
             </CardContent>
           </Card>
         </section>
 
-        {/* Calculation Method */}
         <section className="space-y-6">
           <h2 className="text-2xl font-bold text-foreground">
-            Calculation method (annual basis)
+            {t('howItWorks.calculationMethod.title')}
           </h2>
           <Card>
             <CardContent className="p-6">
               <ol className="space-y-4">
                 {[
-                  'Convert the user input to an annual gross figure (for weekly or monthly pay, annualise first).',
-                  'Determine Personal Allowance (including the reduction above £100,000 where applicable).',
+                  t('howItWorks.calculationMethod.step1'),
+                  t('howItWorks.calculationMethod.step2'),
                   <>
-                    Calculate taxable income:{' '}
+                    {t('howItWorks.calculationMethod.step3intro')}{' '}
                     <code className="bg-muted px-2 py-1 rounded text-sm">
-                      taxable income = annual gross − Personal Allowance
+                      {t('howItWorks.calculationMethod.step3formula')}
                     </code>{' '}
-                    (minimum 0).
+                    {t('howItWorks.calculationMethod.step3suffix')}
                   </>,
-                  'Calculate Income Tax by applying the relevant rates to the taxable income bands.',
-                  'Calculate employee National Insurance (Class 1 primary) from the annual gross figure.',
+                  t('howItWorks.calculationMethod.step4'),
+                  t('howItWorks.calculationMethod.step5'),
                   <>
-                    Calculate take home pay:{' '}
+                    {t('howItWorks.calculationMethod.step6intro')}{' '}
                     <code className="bg-muted px-2 py-1 rounded text-sm">
-                      take home = annual gross − Income Tax − National Insurance
+                      {t('howItWorks.calculationMethod.step6formula')}
                     </code>
                   </>,
-                  'If the user selected weekly or monthly, convert the annual results back to that period.',
+                  t('howItWorks.calculationMethod.step7'),
                 ].map((step, i) => (
                   <li key={i} className="flex gap-4">
                     <span className="shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm">
@@ -460,19 +477,17 @@ export default function HowItWorksPage() {
           </Card>
         </section>
 
-        {/* Worked Examples */}
         <section className="space-y-6">
           <h2 className="text-2xl font-bold text-foreground">
-            Worked examples
+            {t('howItWorks.workedExamples.title')}
           </h2>
           <p className="text-muted-foreground">
-            Single job, NI category A, no other deductions
+            {t('howItWorks.workedExamples.subtitle')}
           </p>
 
-          {/* Example A: £30,000 */}
           <ExampleCard
-            title="Example A"
-            gross="£30,000 per year"
+            title={t('howItWorks.examples.exampleA')}
+            gross={`£30,000 ${t('howItWorks.examples.perYear')}`}
             personalAllowance="£12,570"
             taxableIncome="£17,430"
             englandTax="£3,486.00"
@@ -489,12 +504,12 @@ export default function HowItWorksPage() {
               { band: '£2,509 at 21%', amount: '£526.89' },
             ]}
             niBreakdown={[{ band: '£17,430 at 8%', amount: '£1,394.40' }]}
+            t={t}
           />
 
-          {/* Example B: £60,000 */}
           <ExampleCard
-            title="Example B"
-            gross="£60,000 per year"
+            title={t('howItWorks.examples.exampleB')}
+            gross={`£60,000 ${t('howItWorks.examples.perYear')}`}
             personalAllowance="£12,570"
             taxableIncome="£47,430"
             englandTax="£11,432.00"
@@ -516,13 +531,15 @@ export default function HowItWorksPage() {
               { band: '£37,700 at 8%', amount: '£3,016.00' },
               { band: '£9,730 at 2%', amount: '£194.60' },
             ]}
+            t={t}
           />
 
-          {/* Example C: £150,000 */}
           <ExampleCard
-            title="Example C"
-            gross="£150,000 per year"
-            personalAllowance="£0 (fully removed at £125,140+)"
+            title={t('howItWorks.examples.exampleC')}
+            gross={`£150,000 ${t('howItWorks.examples.perYear')}`}
+            personalAllowance={t(
+              'howItWorks.examples.personalAllowanceRemoved'
+            )}
             taxableIncome="£150,000"
             englandTax="£53,703.00"
             scotlandTax="£59,666.10"
@@ -546,34 +563,29 @@ export default function HowItWorksPage() {
               { band: '£37,700 at 8%', amount: '£3,016.00' },
               { band: '£99,730 at 2%', amount: '£1,994.60' },
             ]}
+            t={t}
           />
         </section>
 
-        {/* CTA */}
         <Card className="bg-primary text-primary-foreground">
           <CardContent className="p-6 text-center space-y-4">
             <h3 className="text-xl font-semibold">
-              Ready to calculate your take home pay?
+              {t('howItWorks.cta.title')}
             </h3>
             <Link
               href="/"
               className="inline-flex items-center gap-2 bg-background text-foreground px-6 py-3 rounded-lg font-medium hover:bg-background/90 transition-colors"
             >
               <Calculator className="h-5 w-5" />
-              Go to Calculator
+              {t('howItWorks.cta.buttonText')}
             </Link>
           </CardContent>
         </Card>
       </main>
 
-      {/* Footer */}
       <footer className="border-t mt-12">
         <div className="max-w-4xl mx-auto px-4 py-6 text-center text-sm text-muted-foreground">
-          <p>
-            This calculator provides estimates based on HMRC 2025/26 tax rates.
-            For accurate calculations, please consult a tax professional or use
-            HMRC official tools.
-          </p>
+          <p>{t('howItWorks.footer.disclaimer')}</p>
         </div>
       </footer>
     </div>

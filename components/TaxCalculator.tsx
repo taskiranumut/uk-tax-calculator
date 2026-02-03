@@ -6,9 +6,9 @@ import {
   Period,
   Jurisdiction,
   NICategory,
-  NI_CATEGORY_DESCRIPTIONS,
   TakeHomeResult,
 } from '@/lib/takeHome';
+import { useTranslations } from '@/contexts/LocaleContext';
 import {
   Card,
   CardContent,
@@ -42,18 +42,6 @@ import {
   HelpCircle,
 } from 'lucide-react';
 import Link from 'next/link';
-
-const periodLabels: Record<Period, string> = {
-  year: 'Yearly',
-  month: 'Monthly',
-  week: 'Weekly',
-  day: 'Daily',
-};
-
-const jurisdictionLabels: Record<Jurisdiction, string> = {
-  ruk: 'England, Wales & N. Ireland',
-  scotland: 'Scotland',
-};
 
 const niCategories: NICategory[] = [
   'A',
@@ -133,6 +121,7 @@ function ResultCard({
 }
 
 export default function TaxCalculator() {
+  const t = useTranslations();
   const [grossInput, setGrossInput] = useState<string>('30000');
   const [period, setPeriod] = useState<Period>('year');
   const [outputPeriod, setOutputPeriod] = useState<Period>('year');
@@ -187,19 +176,18 @@ export default function TaxCalculator() {
             <div className="inline-flex items-center justify-center gap-2">
               <Calculator className="h-8 w-8 text-primary" />
               <h1 className="text-3xl font-bold text-foreground">
-                UK Take Home Pay Calculator
+                {t('calculator.pageTitle')}
               </h1>
             </div>
             <p className="text-muted-foreground">
-              Calculate your net income after Income Tax and National Insurance
-              for the 2025/26 tax year
+              {t('calculator.pageSubtitle')}
             </p>
             <Link
               href="/how-it-works"
               className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
             >
               <HelpCircle className="h-4 w-4" />
-              How it works
+              {t('calculator.howItWorksLink')}
             </Link>
           </div>
 
@@ -209,16 +197,16 @@ export default function TaxCalculator() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <PoundSterling className="h-5 w-5" />
-                  Income Details
+                  {t('calculator.incomeDetails')}
                 </CardTitle>
                 <CardDescription>
-                  Enter your gross income and select options
+                  {t('calculator.incomeDetailsDescription')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 {/* Gross Income */}
                 <div className="space-y-2">
-                  <Label htmlFor="gross">Gross Income</Label>
+                  <Label htmlFor="gross">{t('calculator.grossIncome')}</Label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                       £
@@ -237,17 +225,19 @@ export default function TaxCalculator() {
 
                 {/* Input Period */}
                 <div className="space-y-2">
-                  <Label>Input Period</Label>
+                  <Label>{t('calculator.inputPeriod')}</Label>
                   <Tabs
                     value={period}
                     onValueChange={(v) => setPeriod(v as Period)}
                   >
                     <TabsList className="grid grid-cols-4 w-full">
-                      {(Object.keys(periodLabels) as Period[]).map((p) => (
-                        <TabsTrigger key={p} value={p}>
-                          {periodLabels[p]}
-                        </TabsTrigger>
-                      ))}
+                      {(['year', 'month', 'week', 'day'] as Period[]).map(
+                        (p) => (
+                          <TabsTrigger key={p} value={p}>
+                            {t(`calculator.periods.${p}`)}
+                          </TabsTrigger>
+                        )
+                      )}
                     </TabsList>
                   </Tabs>
                 </div>
@@ -258,7 +248,7 @@ export default function TaxCalculator() {
                 <div className="space-y-2">
                   <Label className="flex items-center gap-2">
                     <Building2 className="h-4 w-4" />
-                    Tax Region
+                    {t('calculator.taxRegion')}
                   </Label>
                   <Select
                     value={jurisdiction}
@@ -268,13 +258,11 @@ export default function TaxCalculator() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {(Object.keys(jurisdictionLabels) as Jurisdiction[]).map(
-                        (j) => (
-                          <SelectItem key={j} value={j}>
-                            {jurisdictionLabels[j]}
-                          </SelectItem>
-                        )
-                      )}
+                      {(['ruk', 'scotland'] as Jurisdiction[]).map((j) => (
+                        <SelectItem key={j} value={j}>
+                          {t(`calculator.jurisdictions.${j}`)}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
@@ -282,18 +270,13 @@ export default function TaxCalculator() {
                 {/* Tax Code */}
                 <div className="space-y-2">
                   <Label htmlFor="taxCode" className="flex items-center gap-2">
-                    Tax Code
+                    {t('calculator.taxCode')}
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Info className="h-4 w-4 text-muted-foreground cursor-help" />
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
-                        <p>
-                          Leave empty for default (1257L). Common codes: BR
-                          (basic rate all), D0 (higher rate all), 0T (no
-                          allowance), NT (no tax). S prefix for Scotland (e.g.,
-                          S1257L).
-                        </p>
+                        <p>{t('calculator.taxCodeTooltip')}</p>
                       </TooltipContent>
                     </Tooltip>
                   </Label>
@@ -309,17 +292,13 @@ export default function TaxCalculator() {
                 {/* NI Category */}
                 <div className="space-y-2">
                   <Label className="flex items-center gap-2">
-                    NI Category
+                    {t('calculator.niCategory')}
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Info className="h-4 w-4 text-muted-foreground cursor-help" />
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
-                        <p>
-                          Category A is for most employees. Other categories
-                          apply to specific groups like apprentices (H), under
-                          21 (M), or state pension age (C).
-                        </p>
+                        <p>{t('calculator.niCategoryTooltip')}</p>
                       </TooltipContent>
                     </Tooltip>
                   </Label>
@@ -335,7 +314,7 @@ export default function TaxCalculator() {
                         <SelectItem key={cat} value={cat}>
                           <span className="font-mono font-bold">{cat}</span>
                           <span className="ml-2 text-muted-foreground">
-                            - {NI_CATEGORY_DESCRIPTIONS[cat]}
+                            - {t(`calculator.niCategories.${cat}`)}
                           </span>
                         </SelectItem>
                       ))}
@@ -350,18 +329,20 @@ export default function TaxCalculator() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Calendar className="h-5 w-5" />
-                  Results
+                  {t('calculator.results')}
                 </CardTitle>
-                <CardDescription>Your take home pay breakdown</CardDescription>
+                <CardDescription>
+                  {t('calculator.resultsDescription')}
+                </CardDescription>
                 {/* Output Period Selector */}
                 <Tabs
                   value={outputPeriod}
                   onValueChange={(v) => setOutputPeriod(v as Period)}
                 >
                   <TabsList className="grid grid-cols-4 w-full">
-                    {(Object.keys(periodLabels) as Period[]).map((p) => (
+                    {(['year', 'month', 'week', 'day'] as Period[]).map((p) => (
                       <TabsTrigger key={p} value={p}>
-                        {periodLabels[p]}
+                        {t(`calculator.periods.${p}`)}
                       </TabsTrigger>
                     ))}
                   </TabsList>
@@ -372,11 +353,11 @@ export default function TaxCalculator() {
                   <>
                     <div className="grid grid-cols-2 gap-4">
                       <ResultCard
-                        title="Gross Income"
+                        title={t('calculator.grossIncome')}
                         value={outputResult.gross}
                       />
                       <ResultCard
-                        title="Take Home"
+                        title={t('calculator.takeHome')}
                         value={outputResult.takeHome}
                         highlight
                         subtitle={
@@ -384,7 +365,7 @@ export default function TaxCalculator() {
                             ? `${(
                                 (result.annual.takeHome / result.annual.gross) *
                                 100
-                              ).toFixed(1)}% of gross`
+                              ).toFixed(1)}% ${t('calculator.ofGross')}`
                             : undefined
                         }
                       />
@@ -394,16 +375,16 @@ export default function TaxCalculator() {
 
                     <div className="space-y-3">
                       <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
-                        Deductions
+                        {t('calculator.deductions')}
                       </h4>
                       <div className="grid grid-cols-2 gap-4">
                         <ResultCard
-                          title="Income Tax"
+                          title={t('calculator.incomeTax')}
                           value={outputResult.incomeTax}
                           negative
                         />
                         <ResultCard
-                          title="National Insurance"
+                          title={t('calculator.nationalInsurance')}
                           value={outputResult.nationalInsurance}
                           negative
                         />
@@ -417,12 +398,12 @@ export default function TaxCalculator() {
                         {/* Annual Summary */}
                         <div className="space-y-3">
                           <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
-                            Annual Summary
+                            {t('calculator.annualSummary')}
                           </h4>
                           <div className="space-y-2 text-sm">
                             <div className="flex justify-between">
                               <span className="text-muted-foreground">
-                                Personal Allowance
+                                {t('calculator.personalAllowance')}
                               </span>
                               <span className="font-medium">
                                 {formatCurrency(
@@ -432,7 +413,7 @@ export default function TaxCalculator() {
                             </div>
                             <div className="flex justify-between">
                               <span className="text-muted-foreground">
-                                Taxable Income
+                                {t('calculator.taxableIncome')}
                               </span>
                               <span className="font-medium">
                                 {formatCurrency(result.annual.taxableIncome)}
@@ -447,7 +428,7 @@ export default function TaxCalculator() {
                             <Separator />
                             <div className="space-y-3">
                               <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
-                                Tax Band Breakdown
+                                {t('calculator.taxBandBreakdown')}
                               </h4>
                               <div className="space-y-2">
                                 {result.annual.incomeTaxBreakdown.map(
@@ -457,8 +438,10 @@ export default function TaxCalculator() {
                                       className="flex items-center justify-between text-sm bg-muted/50 rounded-lg p-3"
                                     >
                                       <div>
-                                        <span className="capitalize font-medium">
-                                          {band.bandName}
+                                        <span className="font-medium">
+                                          {t(
+                                            `calculator.taxBands.${band.bandName}`
+                                          )}
                                         </span>
                                         <span className="text-muted-foreground ml-2">
                                           @ {formatPercent(band.rate)}
@@ -469,7 +452,7 @@ export default function TaxCalculator() {
                                           {formatCurrency(band.tax)}
                                         </div>
                                         <div className="text-xs text-muted-foreground">
-                                          on{' '}
+                                          {t('calculator.on')}{' '}
                                           {formatCurrency(band.taxableInBand)}
                                         </div>
                                       </div>
@@ -485,17 +468,22 @@ export default function TaxCalculator() {
                         <Separator />
                         <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
                           <span className="bg-muted px-2 py-1 rounded">
-                            Tax Year: {result.meta.calculationTaxYear}
+                            {t('calculator.taxYear')}:{' '}
+                            {result.meta.calculationTaxYear}
                           </span>
                           <span className="bg-muted px-2 py-1 rounded">
-                            Region:{' '}
-                            {jurisdictionLabels[result.meta.jurisdiction]}
+                            {t('calculator.region')}:{' '}
+                            {t(
+                              `calculator.jurisdictions.${result.meta.jurisdiction}`
+                            )}
                           </span>
                           <span className="bg-muted px-2 py-1 rounded">
-                            Tax Code: {result.meta.taxCodeUsed || '1257L'}
+                            {t('calculator.taxCode')}:{' '}
+                            {result.meta.taxCodeUsed || '1257L'}
                           </span>
                           <span className="bg-muted px-2 py-1 rounded">
-                            NI Category: {result.meta.niCategory}
+                            {t('calculator.niCategory')}:{' '}
+                            {result.meta.niCategory}
                           </span>
                         </div>
                       </>
@@ -504,7 +492,7 @@ export default function TaxCalculator() {
                 ) : (
                   <div className="text-center py-12 text-muted-foreground">
                     <Calculator className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                    <p>Enter your gross income to see results</p>
+                    <p>{t('calculator.enterGrossIncome')}</p>
                   </div>
                 )}
               </CardContent>
@@ -515,18 +503,14 @@ export default function TaxCalculator() {
           <Card className="bg-muted/50">
             <CardContent className="py-4 space-y-2">
               <p className="text-sm text-muted-foreground text-center">
-                This calculator provides estimates based on HMRC 2025/26 tax
-                rates. For accurate calculations, please consult a tax
-                professional or use HMRC official tools. Student loan
-                repayments, pension contributions, and other deductions are not
-                included.
+                {t('calculator.footerDisclaimer')}
               </p>
               <p className="text-center">
                 <Link
                   href="/how-it-works"
                   className="text-sm text-primary hover:underline"
                 >
-                  Learn more about how we calculate your take home pay
+                  {t('calculator.learnMoreLink')}
                 </Link>
               </p>
             </CardContent>

@@ -1,0 +1,191 @@
+{
+  "common": {
+    "appName": "UK Vergi Hesaplayıcı",
+    "appDescription": "Net Maaş Tahmini",
+    "backToCalculator": "Hesaplayıcıya Dön",
+    "toggleDarkMode": "Karanlık modu aç/kapat"
+  },
+  "navigation": {
+    "home": "Ana Sayfa",
+    "howItWorks": "Nasıl Çalışır"
+  },
+  "calculator": {
+    "title": "Hesaplayıcı",
+    "salary": "Yıllık Maaş",
+    "calculate": "Hesapla",
+    "pageTitle": "UK Net Maaş Hesaplayıcı",
+    "pageSubtitle": "2025/26 vergi yılı için Gelir Vergisi ve Ulusal Sigorta sonrası net gelirinizi hesaplayın",
+    "howItWorksLink": "Nasıl çalışır",
+    "incomeDetails": "Gelir Bilgileri",
+    "incomeDetailsDescription": "Brüt gelirinizi girin ve seçenekleri belirleyin",
+    "grossIncome": "Brüt Gelir",
+    "inputPeriod": "Giriş Dönemi",
+    "taxRegion": "Vergi Bölgesi",
+    "taxCode": "Vergi Kodu",
+    "taxCodeTooltip": "Varsayılan için boş bırakın (1257L). Yaygın kodlar: BR (tümü temel oran), D0 (tümü yüksek oran), 0T (istisna yok), NT (vergi yok). İskoçya için S öneki (örn. S1257L).",
+    "niCategory": "NI Kategorisi",
+    "niCategoryTooltip": "Kategori A çoğu çalışan içindir. Diğer kategoriler çıraklar (H), 21 yaş altı (M) veya devlet emeklilik yaşı (C) gibi belirli gruplar için geçerlidir.",
+    "results": "Sonuçlar",
+    "resultsDescription": "Net maaş dağılımınız",
+    "takeHome": "Net Maaş",
+    "ofGross": "brütün",
+    "deductions": "Kesintiler",
+    "incomeTax": "Gelir Vergisi",
+    "nationalInsurance": "Ulusal Sigorta",
+    "annualSummary": "Yıllık Özet",
+    "personalAllowance": "Kişisel İstisna",
+    "taxableIncome": "Vergilendirilebilir Gelir",
+    "taxBandBreakdown": "Vergi Dilimi Dağılımı",
+    "on": "üzerinde",
+    "taxYear": "Vergi Yılı",
+    "region": "Bölge",
+    "enterGrossIncome": "Sonuçları görmek için brüt gelirinizi girin",
+    "footerDisclaimer": "Bu hesaplayıcı HMRC 2025/26 vergi oranlarına dayalı tahminler sunar. Doğru hesaplamalar için lütfen bir vergi uzmanına danışın veya HMRC resmi araçlarını kullanın. Öğrenci kredisi geri ödemeleri, emeklilik katkıları ve diğer kesintiler dahil değildir.",
+    "learnMoreLink": "Net maaş hesaplamamız hakkında daha fazla bilgi edinin",
+    "periods": {
+      "year": "Yıllık",
+      "month": "Aylık",
+      "week": "Haftalık",
+      "day": "Günlük"
+    },
+    "jurisdictions": {
+      "ruk": "İngiltere, Galler ve K. İrlanda",
+      "scotland": "İskoçya"
+    },
+    "taxBands": {
+      "basic": "Temel oran",
+      "higher": "Yüksek oran",
+      "additional": "Ek oran",
+      "starter": "Başlangıç oranı",
+      "intermediate": "Ara oran",
+      "advanced": "İleri oran",
+      "top": "Üst oran"
+    },
+    "niCategories": {
+      "A": "Standart oran (çoğu çalışan)",
+      "B": "Geçerli seçim yapmış evli kadınlar/dullar",
+      "C": "Devlet emeklilik yaşı çalışanları",
+      "D": "Ertelenmiş (sözleşmeden çıkmış)",
+      "E": "Evli kadınlar/dullar + devlet emeklilik yaşı",
+      "F": "Serbest liman standart oranı",
+      "H": "25 yaş altı çıraklar",
+      "I": "Serbest liman evli kadınlar/dullar",
+      "J": "Ertelenmiş oran",
+      "K": "Devlet emeklilik yaşı + işveren NI yok",
+      "L": "Serbest liman ertelenmiş",
+      "M": "21 yaş altı",
+      "N": "Serbest limanda 21 yaş altı",
+      "S": "Ertelenmiş + devlet emeklilik yaşı",
+      "V": "Gaziler (ilk 12 ay)",
+      "Z": "21 yaş altı ertelenmiş"
+    }
+  },
+  "howItWorks": {
+    "title": "Net maaş tahminini nasıl hesaplıyoruz",
+    "taxYear": "Vergi yılı 6 Nisan 2025 – 5 Nisan 2026",
+    "intro": {
+      "paragraph": "Bu hesaplayıcı, tek bir istihdam için UK kurallarına dayalı <strong>tahmini</strong> net maaş tutarını sunar:",
+      "bullet1": "Gelir Vergisi (İngiltere, Kuzey İrlanda, Galler oranları ve dilimleri) veya İskoç Gelir Vergisi (uygulanabilirse)",
+      "bullet2": "Çalışan Ulusal Sigorta (Sınıf 1, birincil katkı)",
+      "assumesTitle": "Bu hesaplayıcı aşağıdaki gibi diğer düzeltmeleri varsaymaz:",
+      "assumes1": "Emeklilik katkıları (maaş feda dahil)",
+      "assumes2": "Öğrenci kredisi geri ödemeleri",
+      "assumes3": "Ayni yardımlar",
+      "assumes4": "Hayırsever bağışlar",
+      "assumes5": "Birden fazla iş"
+    },
+    "officialRates": "Kullanılan resmi oranlar (2025–2026)",
+    "personalAllowance": {
+      "title": "Kişisel İstisna",
+      "standard": "Standart Kişisel İstisna: yılda <strong>£12.570</strong>",
+      "reduction": "Düzeltilmiş net geliriniz <strong>£100.000</strong> üzerindeyse, Kişisel İstisna £100.000 üzeri her <strong>£2 için £1</strong> azalır ve <strong>£125.140'ta £0</strong> olur",
+      "sourceLink": "Gelir Vergisi oranları ve Kişisel İstisnalar - GOV.UK"
+    },
+    "englandNiTax": {
+      "title": "Gelir Vergisi (İngiltere ve Kuzey İrlanda)",
+      "ratesApply": "Oranlar Kişisel İstisna üzerindeki <strong>vergilendirilebilir gelirinize</strong> uygulanır",
+      "band": "Dilim",
+      "rate": "Oran",
+      "taxableIncome": "Vergilendirilebilir Gelir",
+      "basicRate": "Temel oran",
+      "higherRate": "Yüksek oran",
+      "additionalRate": "Ek oran",
+      "basicRange": "£37.700'ye kadar",
+      "higherRange": "£37.701 – £125.140",
+      "additionalRange": "£125.140 üzeri",
+      "sourceLink": "2025–2026 işveren oranları ve eşikleri - GOV.UK"
+    },
+    "scotlandTax": {
+      "title": "İskoç Gelir Vergisi",
+      "ratesApply": "Oranlar Kişisel İstisna üzerindeki <strong>vergilendirilebilir gelirinize</strong> uygulanır",
+      "starterRate": "Başlangıç oranı",
+      "basicRate": "Temel oran",
+      "intermediateRate": "Ara oran",
+      "higherRate": "Yüksek oran",
+      "advancedRate": "İleri oran",
+      "topRate": "Üst oran",
+      "starterRange": "£2.827'ye kadar",
+      "basicRange": "£2.828 – £14.921",
+      "intermediateRange": "£14.922 – £31.092",
+      "higherRange": "£31.093 – £62.430",
+      "advancedRange": "£62.431 – £125.140",
+      "topRange": "£125.140 üzeri",
+      "sourceLink": "2025–2026 işveren oranları ve eşikleri - GOV.UK"
+    },
+    "nationalInsurance": {
+      "title": "Çalışan Ulusal Sigorta (Sınıf 1, birincil, NI kategori A)",
+      "ratesApply": "Ulusal Sigorta <strong>brüt kazançlar</strong> üzerinden hesaplanır (vergilendirilebilir gelir üzerinden değil)",
+      "thresholds": "Eşikler",
+      "rates": "Oranlar (Kategori A)",
+      "primaryThreshold": "Birincil Eşik",
+      "upperEarningsLimit": "Üst Kazanç Limiti",
+      "rate1Label": "£12.570'ye kadar",
+      "rate2Label": "£12.570 – £50.270",
+      "rate3Label": "£50.270 üzeri",
+      "sourceLink": "2025–2026 işveren oranları ve eşikleri - GOV.UK"
+    },
+    "calculationMethod": {
+      "title": "Hesaplama yöntemi (yıllık baz)",
+      "step1": "Kullanıcı girişini yıllık brüt tutara dönüştürün (haftalık veya aylık maaş için önce yıllıklaştırın).",
+      "step2": "Kişisel İstisnayı belirleyin (£100.000 üzeri indirim dahil, uygulanabilirse).",
+      "step3intro": "Vergilendirilebilir geliri hesaplayın:",
+      "step3formula": "vergilendirilebilir gelir = yıllık brüt − Kişisel İstisna",
+      "step3suffix": "(minimum 0).",
+      "step4": "Gelir Vergisini, ilgili oranları vergilendirilebilir gelir dilimlerine uygulayarak hesaplayın.",
+      "step5": "Çalışan Ulusal Sigortasını (Sınıf 1 birincil) yıllık brüt tutardan hesaplayın.",
+      "step6intro": "Net maaşı hesaplayın:",
+      "step6formula": "net maaş = yıllık brüt − Gelir Vergisi − Ulusal Sigorta",
+      "step7": "Kullanıcı haftalık veya aylık seçtiyse, yıllık sonuçları o döneme geri dönüştürün."
+    },
+    "workedExamples": {
+      "title": "Çalışılmış örnekler",
+      "subtitle": "Tek iş, NI kategori A, başka kesinti yok"
+    },
+    "exampleCard": {
+      "grossIncome": "Brüt gelir",
+      "personalAllowance": "Kişisel İstisna",
+      "taxableIncome": "Vergilendirilebilir Gelir",
+      "englandNiTax": "İngiltere ve Kuzey İrlanda Vergisi",
+      "scotlandTax": "İskoç Gelir Vergisi",
+      "nationalInsurance": "Ulusal Sigorta (UK geneli, Kategori A)",
+      "totalIncomeTax": "Toplam Gelir Vergisi",
+      "totalNi": "Toplam NI",
+      "englandTakeHome": "İngiltere ve K. İrlanda Net Maaş",
+      "scotlandTakeHome": "İskoçya Net Maaş"
+    },
+    "examples": {
+      "exampleA": "Örnek A",
+      "exampleB": "Örnek B",
+      "exampleC": "Örnek C",
+      "perYear": "yıllık",
+      "personalAllowanceRemoved": "£0 (£125.140+ seviyesinde tamamen kaldırıldı)"
+    },
+    "cta": {
+      "title": "Net maaşınızı hesaplamaya hazır mısınız?",
+      "buttonText": "Hesaplayıcıya Git"
+    },
+    "footer": {
+      "disclaimer": "Bu hesaplayıcı HMRC 2025/26 vergi oranlarına dayalı tahminler sunar. Doğru hesaplamalar için lütfen bir vergi uzmanına danışın veya HMRC resmi araçlarını kullanın."
+    }
+  }
+}

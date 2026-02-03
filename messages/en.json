@@ -1,0 +1,191 @@
+{
+  "common": {
+    "appName": "UK Tax Calculator",
+    "appDescription": "Take Home Pay Estimator",
+    "backToCalculator": "Back to Calculator",
+    "toggleDarkMode": "Toggle dark mode"
+  },
+  "navigation": {
+    "home": "Home",
+    "howItWorks": "How It Works"
+  },
+  "calculator": {
+    "title": "Calculator",
+    "salary": "Annual Salary",
+    "calculate": "Calculate",
+    "pageTitle": "UK Take Home Pay Calculator",
+    "pageSubtitle": "Calculate your net income after Income Tax and National Insurance for the 2025/26 tax year",
+    "howItWorksLink": "How it works",
+    "incomeDetails": "Income Details",
+    "incomeDetailsDescription": "Enter your gross income and select options",
+    "grossIncome": "Gross Income",
+    "inputPeriod": "Input Period",
+    "taxRegion": "Tax Region",
+    "taxCode": "Tax Code",
+    "taxCodeTooltip": "Leave empty for default (1257L). Common codes: BR (basic rate all), D0 (higher rate all), 0T (no allowance), NT (no tax). S prefix for Scotland (e.g., S1257L).",
+    "niCategory": "NI Category",
+    "niCategoryTooltip": "Category A is for most employees. Other categories apply to specific groups like apprentices (H), under 21 (M), or state pension age (C).",
+    "results": "Results",
+    "resultsDescription": "Your take home pay breakdown",
+    "takeHome": "Take Home",
+    "ofGross": "of gross",
+    "deductions": "Deductions",
+    "incomeTax": "Income Tax",
+    "nationalInsurance": "National Insurance",
+    "annualSummary": "Annual Summary",
+    "personalAllowance": "Personal Allowance",
+    "taxableIncome": "Taxable Income",
+    "taxBandBreakdown": "Tax Band Breakdown",
+    "on": "on",
+    "taxYear": "Tax Year",
+    "region": "Region",
+    "enterGrossIncome": "Enter your gross income to see results",
+    "footerDisclaimer": "This calculator provides estimates based on HMRC 2025/26 tax rates. For accurate calculations, please consult a tax professional or use HMRC official tools. Student loan repayments, pension contributions, and other deductions are not included.",
+    "learnMoreLink": "Learn more about how we calculate your take home pay",
+    "periods": {
+      "year": "Yearly",
+      "month": "Monthly",
+      "week": "Weekly",
+      "day": "Daily"
+    },
+    "jurisdictions": {
+      "ruk": "England, Wales & N. Ireland",
+      "scotland": "Scotland"
+    },
+    "taxBands": {
+      "basic": "Basic rate",
+      "higher": "Higher rate",
+      "additional": "Additional rate",
+      "starter": "Starter rate",
+      "intermediate": "Intermediate rate",
+      "advanced": "Advanced rate",
+      "top": "Top rate"
+    },
+    "niCategories": {
+      "A": "Standard rate (most employees)",
+      "B": "Married women/widows with valid election",
+      "C": "State pension age employees",
+      "D": "Deferred (contracted-out)",
+      "E": "Married women/widows + state pension age",
+      "F": "Freeport standard rate",
+      "H": "Apprentices under 25",
+      "I": "Freeport married women/widows",
+      "J": "Deferred rate",
+      "K": "State pension age + no employer NI",
+      "L": "Freeport deferred",
+      "M": "Under 21",
+      "N": "Under 21 in Freeport",
+      "S": "Deferred + state pension age",
+      "V": "Veterans (first 12 months)",
+      "Z": "Under 21 deferred"
+    }
+  },
+  "howItWorks": {
+    "title": "How we estimate take home pay",
+    "taxYear": "Tax year 6 April 2025 to 5 April 2026",
+    "intro": {
+      "paragraph": "This calculator provides an <strong>estimated</strong> take home pay figure for a single employment, based on the UK rules for:",
+      "bullet1": "Income Tax (England, Northern Ireland, Wales rates and bands) or Scottish Income Tax (if applicable)",
+      "bullet2": "Employee National Insurance (Class 1, primary contribution)",
+      "assumesTitle": "This calculator assumes no other adjustments, for example:",
+      "assumes1": "Pension contributions (including salary sacrifice)",
+      "assumes2": "Student loan repayments",
+      "assumes3": "Benefits in kind",
+      "assumes4": "Charitable giving",
+      "assumes5": "Multiple jobs"
+    },
+    "officialRates": "Official rates used (2025 to 2026)",
+    "personalAllowance": {
+      "title": "Personal Allowance",
+      "standard": "Standard Personal Allowance: <strong>£12,570</strong> per year",
+      "reduction": "If your adjusted net income is above <strong>£100,000</strong>, the Personal Allowance is reduced by <strong>£1 for every £2</strong> over £100,000, reaching <strong>£0 at £125,140</strong>",
+      "sourceLink": "Income Tax rates and Personal Allowances - GOV.UK"
+    },
+    "englandNiTax": {
+      "title": "Income Tax (England and Northern Ireland)",
+      "ratesApply": "Rates apply to your <strong>taxable income</strong> above the Personal Allowance",
+      "band": "Band",
+      "rate": "Rate",
+      "taxableIncome": "Taxable Income",
+      "basicRate": "Basic rate",
+      "higherRate": "Higher rate",
+      "additionalRate": "Additional rate",
+      "basicRange": "Up to £37,700",
+      "higherRange": "£37,701 to £125,140",
+      "additionalRange": "Above £125,140",
+      "sourceLink": "Rates and thresholds for employers 2025 to 2026 - GOV.UK"
+    },
+    "scotlandTax": {
+      "title": "Scottish Income Tax",
+      "ratesApply": "Rates apply to your <strong>taxable income</strong> above the Personal Allowance",
+      "starterRate": "Starter rate",
+      "basicRate": "Basic rate",
+      "intermediateRate": "Intermediate rate",
+      "higherRate": "Higher rate",
+      "advancedRate": "Advanced rate",
+      "topRate": "Top rate",
+      "starterRange": "Up to £2,827",
+      "basicRange": "£2,828 to £14,921",
+      "intermediateRange": "£14,922 to £31,092",
+      "higherRange": "£31,093 to £62,430",
+      "advancedRange": "£62,431 to £125,140",
+      "topRange": "Above £125,140",
+      "sourceLink": "Rates and thresholds for employers 2025 to 2026 - GOV.UK"
+    },
+    "nationalInsurance": {
+      "title": "Employee National Insurance (Class 1, primary, NI category A)",
+      "ratesApply": "National Insurance is calculated on <strong>gross earnings</strong> (not on taxable income)",
+      "thresholds": "Thresholds",
+      "rates": "Rates (Category A)",
+      "primaryThreshold": "Primary Threshold",
+      "upperEarningsLimit": "Upper Earnings Limit",
+      "rate1Label": "Up to £12,570",
+      "rate2Label": "£12,570 to £50,270",
+      "rate3Label": "Above £50,270",
+      "sourceLink": "Rates and thresholds for employers 2025 to 2026 - GOV.UK"
+    },
+    "calculationMethod": {
+      "title": "Calculation method (annual basis)",
+      "step1": "Convert the user input to an annual gross figure (for weekly or monthly pay, annualise first).",
+      "step2": "Determine Personal Allowance (including the reduction above £100,000 where applicable).",
+      "step3intro": "Calculate taxable income:",
+      "step3formula": "taxable income = annual gross − Personal Allowance",
+      "step3suffix": "(minimum 0).",
+      "step4": "Calculate Income Tax by applying the relevant rates to the taxable income bands.",
+      "step5": "Calculate employee National Insurance (Class 1 primary) from the annual gross figure.",
+      "step6intro": "Calculate take home pay:",
+      "step6formula": "take home = annual gross − Income Tax − National Insurance",
+      "step7": "If the user selected weekly or monthly, convert the annual results back to that period."
+    },
+    "workedExamples": {
+      "title": "Worked examples",
+      "subtitle": "Single job, NI category A, no other deductions"
+    },
+    "exampleCard": {
+      "grossIncome": "Gross income",
+      "personalAllowance": "Personal Allowance",
+      "taxableIncome": "Taxable Income",
+      "englandNiTax": "England & Northern Ireland Tax",
+      "scotlandTax": "Scottish Income Tax",
+      "nationalInsurance": "National Insurance (UK-wide, Category A)",
+      "totalIncomeTax": "Total Income Tax",
+      "totalNi": "Total NI",
+      "englandTakeHome": "England & N. Ireland Take Home",
+      "scotlandTakeHome": "Scotland Take Home"
+    },
+    "examples": {
+      "exampleA": "Example A",
+      "exampleB": "Example B",
+      "exampleC": "Example C",
+      "perYear": "per year",
+      "personalAllowanceRemoved": "£0 (fully removed at £125,140+)"
+    },
+    "cta": {
+      "title": "Ready to calculate your take home pay?",
+      "buttonText": "Go to Calculator"
+    },
+    "footer": {
+      "disclaimer": "This calculator provides estimates based on HMRC 2025/26 tax rates. For accurate calculations, please consult a tax professional or use HMRC official tools."
+    }
+  }
+}

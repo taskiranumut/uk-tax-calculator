@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
 import { Calculator, Moon, Sun, Globe, ChevronDown } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import {
@@ -11,27 +10,36 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useTheme } from '@/components/ThemeProvider';
+import {
+  useLocale,
+  useSetLocale,
+  useTranslations,
+} from '@/contexts/LocaleContext';
+import { locales, localeNames, localeFlags, type Locale } from '@/i18n/config';
 
 interface NavigationHeaderProps {
   showBackButton?: boolean;
   backButtonHref?: string;
-  backButtonText?: string;
 }
 
 export function NavigationHeader({
   showBackButton = false,
   backButtonHref = '/',
-  backButtonText = 'Back to Calculator',
 }: NavigationHeaderProps) {
   const { theme, toggleTheme } = useTheme();
-  const [currentLanguage, setCurrentLanguage] = useState<'tr' | 'en'>('en');
+  const locale = useLocale();
+  const setLocale = useSetLocale();
+  const t = useTranslations();
 
-  const languages = [
-    { code: 'tr' as const, label: 'Türkçe', flag: '🇹🇷' },
-    { code: 'en' as const, label: 'English', flag: '🇬🇧' },
-  ];
+  const handleLocaleChange = (newLocale: Locale) => {
+    setLocale(newLocale);
+  };
 
-  const currentLang = languages.find((l) => l.code === currentLanguage);
+  const currentLang = {
+    code: locale,
+    label: localeNames[locale],
+    flag: localeFlags[locale],
+  };
 
   return (
     <header className="bg-card border-b">
@@ -47,10 +55,10 @@ export function NavigationHeader({
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-lg leading-tight text-foreground">
-                UK Tax Calculator
+                {t('common.appName')}
               </span>
               <span className="text-xs text-muted-foreground leading-tight">
-                Take Home Pay Estimator
+                {t('common.appDescription')}
               </span>
             </div>
           </Link>
@@ -61,19 +69,19 @@ export function NavigationHeader({
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors text-sm text-foreground">
                 <Globe className="h-4 w-4" />
-                <span className="hidden sm:inline">{currentLang?.flag}</span>
-                <span className="hidden md:inline">{currentLang?.label}</span>
+                <span className="hidden sm:inline">{currentLang.flag}</span>
+                <span className="hidden md:inline">{currentLang.label}</span>
                 <ChevronDown className="h-3 w-3" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {languages.map((lang) => (
+                {locales.map((loc) => (
                   <DropdownMenuItem
-                    key={lang.code}
-                    onClick={() => setCurrentLanguage(lang.code)}
-                    className={currentLanguage === lang.code ? 'bg-muted' : ''}
+                    key={loc}
+                    onClick={() => handleLocaleChange(loc)}
+                    className={locale === loc ? 'bg-muted' : ''}
                   >
-                    <span className="mr-2">{lang.flag}</span>
-                    {lang.label}
+                    <span className="mr-2">{localeFlags[loc]}</span>
+                    {localeNames[loc]}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -89,7 +97,7 @@ export function NavigationHeader({
               <Switch
                 checked={theme === 'dark'}
                 onCheckedChange={toggleTheme}
-                aria-label="Toggle dark mode"
+                aria-label={t('common.toggleDarkMode')}
               />
               <Moon
                 className={`h-4 w-4 ${
@@ -121,7 +129,7 @@ export function NavigationHeader({
                 <path d="m12 19-7-7 7-7" />
                 <path d="M19 12H5" />
               </svg>
-              {backButtonText}
+              {t('common.backToCalculator')}
             </Link>
           </div>
         )}
