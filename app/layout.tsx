@@ -26,7 +26,20 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'UK Tax Calculator - Take Home Pay Estimator',
   description:
-    'Calculate your estimated take home pay based on HMRC 2025/26 tax rates for England, Scotland, Wales, and Northern Ireland.',
+    'Calculate your estimated take home pay based on HMRC 2025/26 tax rates for England, Scotland, Wales, and Northern Ireland',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'UK Income',
+  },
+  icons: {
+    apple: '/icons/apple-touch-icon.png',
+    icon: [
+      { url: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+    ],
+  },
 };
 
 // Inline script to prevent theme flash on page load
