@@ -186,7 +186,7 @@ export default function TaxCalculator() {
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-background p-3 sm:p-4 md:p-8">
+      <div className="bg-background p-3 sm:p-4 md:p-8">
         <div className="max-w-5xl mx-auto space-y-4 sm:space-y-6">
           <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
             {/* Input Section */}
@@ -541,15 +541,6 @@ export default function TaxCalculator() {
               </CardContent>
             </Card>
           </div>
-
-          {/* Footer */}
-          <Card className="bg-muted/50">
-            <CardContent className="py-3 sm:py-4 space-y-2">
-              <p className="text-xs sm:text-sm text-muted-foreground text-center">
-                {t('calculator.footerDisclaimer')}
-              </p>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </TooltipProvider>

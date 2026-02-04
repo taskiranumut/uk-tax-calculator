@@ -4,6 +4,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { LocaleProvider } from '@/contexts/LocaleContext';
 import { NavigationHeader } from '@/components/NavigationHeader';
+import { Footer } from '@/components/Footer';
 import { ScrollLockFix } from '@/components/ScrollLockFix';
 
 const geistSans = Geist({
@@ -52,6 +53,7 @@ export default function RootLayout({
             <ScrollLockFix />
             <NavigationHeader />
             {children}
+            <Footer />
           </ThemeProvider>
         </LocaleProvider>
       </body>

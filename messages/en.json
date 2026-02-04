@@ -2,7 +2,8 @@
   "common": {
     "appDescription": "Take Home Pay Estimator",
     "backToCalculator": "Back to Calculator",
-    "toggleDarkMode": "Toggle dark mode"
+    "toggleDarkMode": "Toggle dark mode",
+    "copyright": "© Taskiran 2026"
   },
   "navigation": {
     "home": "Home",

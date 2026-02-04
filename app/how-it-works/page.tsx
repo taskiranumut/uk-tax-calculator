@@ -222,7 +222,7 @@ export default function HowItWorksPage() {
   const t = useTranslations();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       <main className="max-w-4xl mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-6 sm:space-y-12">
         <div className="space-y-2 sm:space-y-4">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground">
@@ -606,12 +606,6 @@ export default function HowItWorksPage() {
           </CardContent>
         </Card>
       </main>
-
-      <footer className="border-t mt-6 sm:mt-12">
-        <div className="max-w-4xl mx-auto px-3 sm:px-4 py-4 sm:py-6 text-center text-xs sm:text-sm text-muted-foreground">
-          <p>{t('howItWorks.footer.disclaimer')}</p>
-        </div>
-      </footer>
     </div>
   );
 }

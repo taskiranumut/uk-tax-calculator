@@ -2,7 +2,8 @@
   "common": {
     "appDescription": "Net Maaş Tahmini",
     "backToCalculator": "Hesaplayıcıya Dön",
-    "toggleDarkMode": "Karanlık modu aç/kapat"
+    "toggleDarkMode": "Karanlık modu aç/kapat",
+    "copyright": "© Taskiran 2026"
   },
   "navigation": {
     "home": "Ana Sayfa",
