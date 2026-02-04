@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UK Income Tax Calculator
 
-## Getting Started
+A tool for UK employees to estimate take home pay from gross salary, or calculate gross salary from net pay. It computes Income Tax and National Insurance deductions according to the tax rules for England, Wales, Northern Ireland, and Scotland.
 
-First, run the development server:
+## Purpose
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This calculator provides an **estimated** take home pay figure for a single employment, based on UK rules for:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Income Tax** — England, Northern Ireland, and Wales rates and bands, or Scottish Income Tax (if applicable)
+- **Employee National Insurance** — Class 1, primary contribution
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Pension contributions, student loan repayments, benefits in kind, charitable giving, and multiple jobs are not included.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Disclaimer
 
-## Learn More
+> This calculator provides estimates based on HMRC 2025/26 tax rates. For accurate calculations, please consult a tax professional or use HMRC official tools. Student loan repayments, pension contributions, and other deductions are not included.
 
-To learn more about Next.js, take a look at the following resources:
+## References
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Calculations are based on the following official sources:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Income Tax rates and Personal Allowances - GOV.UK](https://www.gov.uk/income-tax-rates)
+- [Rates and thresholds for employers 2025 to 2026 - GOV.UK](https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2025-to-2026)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+© Taskiran 2026
