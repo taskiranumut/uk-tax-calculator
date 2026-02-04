@@ -21,7 +21,3 @@ Calculations are based on the following official sources:
 
 - [Income Tax rates and Personal Allowances - GOV.UK](https://www.gov.uk/income-tax-rates)
 - [Rates and thresholds for employers 2025 to 2026 - GOV.UK](https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2025-to-2026)
-
----
-
-© Taskiran 2026
