@@ -127,7 +127,7 @@ function ResultCard({
 
 export default function TaxCalculator() {
   const t = useTranslations();
-  const [amountInput, setAmountInput] = useState<string>('30000');
+  const [amountInput, setAmountInput] = useState<string>('');
   const [calculationDirection, setCalculationDirection] =
     useState<CalculationDirection>('grossToNet');
   const [period, setPeriod] = useState<Period>('year');
@@ -257,7 +257,7 @@ export default function TaxCalculator() {
                       value={amountInput}
                       onChange={(e) => setAmountInput(e.target.value)}
                       className="pl-7 text-lg"
-                      placeholder="30000"
+                      placeholder="65000"
                     />
                   </div>
                 </div>
