@@ -93,18 +93,22 @@ function ResultCard({
 }: ResultCardProps) {
   return (
     <div
-      className={`rounded-lg p-4 ${
+      className={`rounded-lg p-3 sm:p-4 ${
         highlight ? 'bg-primary text-primary-foreground' : 'bg-muted'
       }`}
     >
       <p
-        className={`text-sm font-medium ${
+        className={`text-xs sm:text-sm font-medium ${
           highlight ? 'text-primary-foreground/80' : 'text-muted-foreground'
         }`}
       >
         {title}
       </p>
-      <p className={`text-2xl font-bold ${negative ? 'text-destructive' : ''}`}>
+      <p
+        className={`text-xl sm:text-2xl font-bold ${
+          negative ? 'text-destructive' : ''
+        }`}
+      >
         {negative && value > 0 ? '-' : ''}
         {formatCurrency(value)}
       </p>
@@ -182,9 +186,9 @@ export default function TaxCalculator() {
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-background p-4 md:p-8">
-        <div className="max-w-5xl mx-auto space-y-6">
-          <div className="grid gap-6 lg:grid-cols-2">
+      <div className="min-h-screen bg-background p-3 sm:p-4 md:p-8">
+        <div className="max-w-5xl mx-auto space-y-4 sm:space-y-6">
+          <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
             {/* Input Section */}
             <Card>
               <CardHeader>
@@ -196,7 +200,7 @@ export default function TaxCalculator() {
                   {t('calculator.incomeDetailsDescription')}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-4 sm:space-y-6">
                 {/* Calculation Direction Toggle */}
                 <div className="space-y-2">
                   <Label className="flex items-center gap-2">
@@ -383,10 +387,10 @@ export default function TaxCalculator() {
                   </TabsList>
                 </Tabs>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-3 sm:space-y-4">
                 {outputResult ? (
                   <>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-2 sm:gap-4">
                       <ResultCard
                         title={t('calculator.grossIncome')}
                         value={outputResult.gross}
@@ -412,7 +416,7 @@ export default function TaxCalculator() {
                       <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
                         {t('calculator.deductions')}
                       </h4>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-2 gap-2 sm:gap-4">
                         <ResultCard
                           title={t('calculator.incomeTax')}
                           value={outputResult.incomeTax}
@@ -431,11 +435,11 @@ export default function TaxCalculator() {
                         <Separator />
 
                         {/* Annual Summary */}
-                        <div className="space-y-3">
-                          <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+                        <div className="space-y-2 sm:space-y-3">
+                          <h4 className="font-semibold text-xs sm:text-sm text-muted-foreground uppercase tracking-wide">
                             {t('calculator.annualSummary')}
                           </h4>
-                          <div className="space-y-2 text-sm">
+                          <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                             <div className="flex justify-between">
                               <span className="text-muted-foreground">
                                 {t('calculator.personalAllowance')}
@@ -461,16 +465,16 @@ export default function TaxCalculator() {
                         {result.annual.incomeTaxBreakdown.length > 0 && (
                           <>
                             <Separator />
-                            <div className="space-y-3">
-                              <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+                            <div className="space-y-2 sm:space-y-3">
+                              <h4 className="font-semibold text-xs sm:text-sm text-muted-foreground uppercase tracking-wide">
                                 {t('calculator.taxBandBreakdown')}
                               </h4>
-                              <div className="space-y-2">
+                              <div className="space-y-1.5 sm:space-y-2">
                                 {result.annual.incomeTaxBreakdown.map(
                                   (band, index) => (
                                     <div
                                       key={index}
-                                      className="flex items-center justify-between text-sm bg-muted/50 rounded-lg p-3"
+                                      className="flex items-center justify-between text-xs sm:text-sm bg-muted/50 rounded-lg p-2 sm:p-3"
                                     >
                                       <div>
                                         <span className="font-medium">
@@ -501,22 +505,22 @@ export default function TaxCalculator() {
 
                         {/* Meta Info */}
                         <Separator />
-                        <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
-                          <span className="bg-muted px-2 py-1 rounded">
+                        <div className="flex flex-wrap gap-1.5 sm:gap-2 text-xs text-muted-foreground">
+                          <span className="bg-muted px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
                             {t('calculator.taxYear')}:{' '}
                             {result.meta.calculationTaxYear}
                           </span>
-                          <span className="bg-muted px-2 py-1 rounded">
+                          <span className="bg-muted px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
                             {t('calculator.region')}:{' '}
                             {t(
                               `calculator.jurisdictions.${result.meta.jurisdiction}`
                             )}
                           </span>
-                          <span className="bg-muted px-2 py-1 rounded">
+                          <span className="bg-muted px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
                             {t('calculator.taxCode')}:{' '}
                             {result.meta.taxCodeUsed || '1257L'}
                           </span>
-                          <span className="bg-muted px-2 py-1 rounded">
+                          <span className="bg-muted px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
                             {t('calculator.niCategory')}:{' '}
                             {result.meta.niCategory}
                           </span>
@@ -540,8 +544,8 @@ export default function TaxCalculator() {
 
           {/* Footer */}
           <Card className="bg-muted/50">
-            <CardContent className="py-4 space-y-2">
-              <p className="text-sm text-muted-foreground text-center">
+            <CardContent className="py-3 sm:py-4 space-y-2">
+              <p className="text-xs sm:text-sm text-muted-foreground text-center">
                 {t('calculator.footerDisclaimer')}
               </p>
             </CardContent>

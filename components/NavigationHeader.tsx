@@ -50,46 +50,46 @@ export function NavigationHeader({
 
   return (
     <header className="bg-card border-b">
-      <div className="max-w-6xl mx-auto px-4 py-3">
+      <div className="max-w-6xl mx-auto px-3 sm:px-4 py-2 sm:py-3">
         <div className="flex items-center justify-between">
           {/* Left side - Logo and App Name */}
           <Link
             href="/"
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity min-w-0"
           >
-            <div className="bg-primary text-primary-foreground p-2 rounded-lg">
-              <Calculator className="h-5 w-5" />
+            <div className="bg-primary text-primary-foreground p-1.5 sm:p-2 rounded-lg shrink-0">
+              <Calculator className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-lg leading-tight text-foreground">
+            <div className="flex flex-col min-w-0">
+              <span className="font-bold text-sm sm:text-lg leading-tight text-foreground truncate">
                 {t('calculator.pageTitle')}
               </span>
-              <span className="text-xs text-muted-foreground leading-tight">
+              <span className="text-xs text-muted-foreground leading-tight hidden sm:block">
                 {t('common.appDescription')}
               </span>
             </div>
           </Link>
 
           {/* Right side - Controls */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
             {/* How It Works Link */}
             <Link
               href="/how-it-works"
-              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors text-sm text-foreground"
+              className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg hover:bg-muted transition-colors text-sm text-foreground"
             >
               <HelpCircle className="h-4 w-4" />
-              <span className="hidden sm:inline">
+              <span className="hidden md:inline">
                 {t('navigation.howItWorks')}
               </span>
             </Link>
 
             {/* Language Selector */}
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors text-sm text-foreground">
+              <DropdownMenuTrigger className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg hover:bg-muted transition-colors text-sm text-foreground">
                 <Globe className="h-4 w-4" />
                 <span className="hidden sm:inline">{currentLang.flag}</span>
-                <span className="hidden md:inline">{currentLang.label}</span>
-                <ChevronDown className="h-3 w-3" />
+                <span className="hidden lg:inline">{currentLang.label}</span>
+                <ChevronDown className="h-3 w-3 hidden sm:block" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 {locales.map((loc) => (
@@ -106,9 +106,9 @@ export function NavigationHeader({
             </DropdownMenu>
 
             {/* Dark Mode Toggle */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <Sun
-                className={`h-4 w-4 ${
+                className={`h-3.5 w-3.5 sm:h-4 sm:w-4 hidden sm:block ${
                   theme === 'light' ? 'text-primary' : 'text-muted-foreground'
                 }`}
               />
@@ -118,7 +118,7 @@ export function NavigationHeader({
                 aria-label={t('common.toggleDarkMode')}
               />
               <Moon
-                className={`h-4 w-4 ${
+                className={`h-3.5 w-3.5 sm:h-4 sm:w-4 hidden sm:block ${
                   theme === 'dark' ? 'text-primary' : 'text-muted-foreground'
                 }`}
               />
@@ -128,10 +128,10 @@ export function NavigationHeader({
 
         {/* Optional Back Button Row */}
         {showBackButton && (
-          <div className="mt-3 pt-3 border-t">
+          <div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t">
             <Link
               href={backButtonHref}
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

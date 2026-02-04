@@ -34,30 +34,49 @@ function RateTable({
   rows: (string | React.ReactNode)[][];
 }) {
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="border-b">
-            {headers.map((header, i) => (
-              <th key={i} className="text-left py-2 px-3 font-semibold">
-                {header}
-              </th>
+    <>
+      {/* Mobile: Card layout */}
+      <div className="sm:hidden space-y-2">
+        {rows.map((row, i) => (
+          <div key={i} className="bg-muted/50 rounded-lg p-3 space-y-1.5">
+            {row.map((cell, j) => (
+              <div
+                key={j}
+                className="flex justify-between items-center text-xs"
+              >
+                <span className="text-muted-foreground">{headers[j]}</span>
+                <span className="font-medium">{cell}</span>
+              </div>
             ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, i) => (
-            <tr key={i} className="border-b last:border-0">
-              {row.map((cell, j) => (
-                <td key={j} className="py-2 px-3">
-                  {cell}
-                </td>
+          </div>
+        ))}
+      </div>
+      {/* Desktop: Table layout */}
+      <div className="hidden sm:block">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b">
+              {headers.map((header, i) => (
+                <th key={i} className="text-left py-2 px-3 font-semibold">
+                  {header}
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {rows.map((row, i) => (
+              <tr key={i} className="border-b last:border-0">
+                {row.map((cell, j) => (
+                  <td key={j} className="py-2 px-3">
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
 
@@ -91,15 +110,15 @@ function ExampleCard({
   t: (key: string) => string;
 }) {
   return (
-    <Card className="overflow-hidden">
-      <div className="bg-primary text-primary-foreground px-6 py-4">
-        <h4 className="font-semibold text-lg">{title}</h4>
-        <p className="text-primary-foreground/80 text-sm">
+    <Card className="overflow-hidden !pt-0">
+      <div className="bg-primary text-primary-foreground px-4 sm:px-6 py-3 sm:py-4">
+        <h4 className="font-semibold text-base sm:text-lg">{title}</h4>
+        <p className="text-primary-foreground/80 text-xs sm:text-sm">
           {t('howItWorks.exampleCard.grossIncome')}: {gross}
         </p>
       </div>
-      <CardContent className="p-6 space-y-6">
-        <div className="grid md:grid-cols-2 gap-4 text-sm">
+      <CardContent className="space-y-4 sm:space-y-6 pt-4 sm:pt-6">
+        <div className="grid md:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
           <div>
             <span className="text-muted-foreground">
               {t('howItWorks.exampleCard.personalAllowance')}:
@@ -116,12 +135,12 @@ function ExampleCard({
 
         <Separator />
 
-        <div className="grid lg:grid-cols-2 gap-6">
-          <div className="space-y-3">
-            <h5 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+        <div className="grid lg:grid-cols-2 gap-4 sm:gap-6">
+          <div className="space-y-2 sm:space-y-3">
+            <h5 className="font-semibold text-xs sm:text-sm text-muted-foreground uppercase tracking-wide">
               {t('howItWorks.exampleCard.englandNiTax')}
             </h5>
-            <div className="space-y-1 text-sm">
+            <div className="space-y-1 text-xs sm:text-sm">
               {englandTaxBreakdown.map((item, i) => (
                 <div key={i} className="flex justify-between">
                   <span className="text-muted-foreground">{item.band}</span>
@@ -135,11 +154,11 @@ function ExampleCard({
             </div>
           </div>
 
-          <div className="space-y-3">
-            <h5 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+          <div className="space-y-2 sm:space-y-3">
+            <h5 className="font-semibold text-xs sm:text-sm text-muted-foreground uppercase tracking-wide">
               {t('howItWorks.exampleCard.scotlandTax')}
             </h5>
-            <div className="space-y-1 text-sm">
+            <div className="space-y-1 text-xs sm:text-sm">
               {scotlandTaxBreakdown.map((item, i) => (
                 <div key={i} className="flex justify-between">
                   <span className="text-muted-foreground">{item.band}</span>
@@ -156,11 +175,11 @@ function ExampleCard({
 
         <Separator />
 
-        <div className="space-y-3">
-          <h5 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+        <div className="space-y-2 sm:space-y-3">
+          <h5 className="font-semibold text-xs sm:text-sm text-muted-foreground uppercase tracking-wide">
             {t('howItWorks.exampleCard.nationalInsurance')}
           </h5>
-          <div className="space-y-1 text-sm max-w-md">
+          <div className="space-y-1 text-xs sm:text-sm max-w-md">
             {niBreakdown.map((item, i) => (
               <div key={i} className="flex justify-between">
                 <span className="text-muted-foreground">{item.band}</span>
@@ -176,18 +195,20 @@ function ExampleCard({
 
         <Separator />
 
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="bg-muted rounded-lg p-4">
-            <p className="text-sm text-muted-foreground mb-1">
+        <div className="grid grid-cols-2 gap-2 sm:gap-4">
+          <div className="bg-muted rounded-lg p-3 sm:p-4">
+            <p className="text-xs sm:text-sm text-muted-foreground mb-1">
               {t('howItWorks.exampleCard.englandTakeHome')}
             </p>
-            <p className="text-2xl font-bold text-primary">{englandTakeHome}</p>
+            <p className="text-lg sm:text-2xl font-bold text-primary">
+              {englandTakeHome}
+            </p>
           </div>
-          <div className="bg-muted rounded-lg p-4">
-            <p className="text-sm text-muted-foreground mb-1">
+          <div className="bg-muted rounded-lg p-3 sm:p-4">
+            <p className="text-xs sm:text-sm text-muted-foreground mb-1">
               {t('howItWorks.exampleCard.scotlandTakeHome')}
             </p>
-            <p className="text-2xl font-bold text-primary">
+            <p className="text-lg sm:text-2xl font-bold text-primary">
               {scotlandTakeHome}
             </p>
           </div>
@@ -202,28 +223,29 @@ export default function HowItWorksPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="max-w-4xl mx-auto px-4 py-8 space-y-12">
-        <div className="space-y-4">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+      <main className="max-w-4xl mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-6 sm:space-y-12">
+        <div className="space-y-2 sm:space-y-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground">
             {t('howItWorks.title')}
           </h1>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-base sm:text-lg text-muted-foreground">
             {t('howItWorks.taxYear')}
           </p>
         </div>
 
         <Card>
-          <CardContent className="p-6 space-y-4">
+          <CardContent className="space-y-3 sm:space-y-4">
             <p
+              className="text-sm sm:text-base"
               dangerouslySetInnerHTML={{
                 __html: t('howItWorks.intro.paragraph'),
               }}
             />
-            <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-2">
+            <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-2 text-sm sm:text-base">
               <li>{t('howItWorks.intro.bullet1')}</li>
               <li>{t('howItWorks.intro.bullet2')}</li>
             </ul>
-            <div className="bg-muted/50 rounded-lg p-4 text-sm">
+            <div className="bg-muted/50 rounded-lg p-3 sm:p-4 text-xs sm:text-sm">
               <p className="font-medium mb-2">
                 {t('howItWorks.intro.assumesTitle')}
               </p>
@@ -238,14 +260,14 @@ export default function HowItWorksPage() {
           </CardContent>
         </Card>
 
-        <section className="space-y-6">
-          <h2 className="text-2xl font-bold text-foreground">
+        <section className="space-y-4 sm:space-y-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground">
             {t('howItWorks.officialRates')}
           </h2>
 
           <Card>
-            <CardContent className="p-6 space-y-4">
-              <h3 className="text-xl font-semibold text-foreground">
+            <CardContent className="space-y-3 sm:space-y-4">
+              <h3 className="text-lg sm:text-xl font-semibold text-foreground">
                 {t('howItWorks.personalAllowance.title')}
               </h3>
               <ul className="space-y-2">
@@ -273,11 +295,11 @@ export default function HowItWorksPage() {
           </Card>
 
           <Card>
-            <CardContent className="p-6 space-y-4">
-              <h3 className="text-xl font-semibold text-foreground">
+            <CardContent className="space-y-3 sm:space-y-4">
+              <h3 className="text-lg sm:text-xl font-semibold text-foreground">
                 {t('howItWorks.englandNiTax.title')}
               </h3>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground text-xs sm:text-sm">
                 <span
                   dangerouslySetInnerHTML={{
                     __html: t('howItWorks.englandNiTax.ratesApply'),
@@ -315,11 +337,11 @@ export default function HowItWorksPage() {
           </Card>
 
           <Card>
-            <CardContent className="p-6 space-y-4">
-              <h3 className="text-xl font-semibold text-foreground">
+            <CardContent className="space-y-3 sm:space-y-4">
+              <h3 className="text-lg sm:text-xl font-semibold text-foreground">
                 {t('howItWorks.scotlandTax.title')}
               </h3>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground text-xs sm:text-sm">
                 <span
                   dangerouslySetInnerHTML={{
                     __html: t('howItWorks.scotlandTax.ratesApply'),
@@ -372,11 +394,11 @@ export default function HowItWorksPage() {
           </Card>
 
           <Card>
-            <CardContent className="p-6 space-y-4">
-              <h3 className="text-xl font-semibold text-foreground">
+            <CardContent className="space-y-3 sm:space-y-4">
+              <h3 className="text-lg sm:text-xl font-semibold text-foreground">
                 {t('howItWorks.nationalInsurance.title')}
               </h3>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground text-xs sm:text-sm">
                 <span
                   dangerouslySetInnerHTML={{
                     __html: t('howItWorks.nationalInsurance.ratesApply'),
@@ -384,12 +406,12 @@ export default function HowItWorksPage() {
                 />
               </p>
 
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <h4 className="font-medium mb-3">
+                  <h4 className="font-medium mb-2 sm:mb-3 text-sm sm:text-base">
                     {t('howItWorks.nationalInsurance.thresholds')}
                   </h4>
-                  <ul className="space-y-2 text-sm">
+                  <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                     <li className="flex justify-between">
                       <span className="text-muted-foreground">
                         {t('howItWorks.nationalInsurance.primaryThreshold')}
@@ -405,10 +427,10 @@ export default function HowItWorksPage() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-medium mb-3">
+                  <h4 className="font-medium mb-2 sm:mb-3 text-sm sm:text-base">
                     {t('howItWorks.nationalInsurance.rates')}
                   </h4>
-                  <ul className="space-y-2 text-sm">
+                  <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                     <li className="flex justify-between">
                       <span className="text-muted-foreground">
                         {t('howItWorks.nationalInsurance.rate1Label')}
@@ -438,13 +460,13 @@ export default function HowItWorksPage() {
           </Card>
         </section>
 
-        <section className="space-y-6">
-          <h2 className="text-2xl font-bold text-foreground">
+        <section className="space-y-4 sm:space-y-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground">
             {t('howItWorks.calculationMethod.title')}
           </h2>
           <Card>
-            <CardContent className="p-6">
-              <ol className="space-y-4">
+            <CardContent>
+              <ol className="space-y-3 sm:space-y-4">
                 {[
                   t('howItWorks.calculationMethod.step1'),
                   t('howItWorks.calculationMethod.step2'),
@@ -465,11 +487,13 @@ export default function HowItWorksPage() {
                   </>,
                   t('howItWorks.calculationMethod.step7'),
                 ].map((step, i) => (
-                  <li key={i} className="flex gap-4">
-                    <span className="shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm">
+                  <li key={i} className="flex gap-2 sm:gap-4">
+                    <span className="shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-xs sm:text-sm">
                       {i + 1}
                     </span>
-                    <span className="pt-1">{step}</span>
+                    <span className="pt-0.5 sm:pt-1 text-sm sm:text-base">
+                      {step}
+                    </span>
                   </li>
                 ))}
               </ol>
@@ -477,11 +501,11 @@ export default function HowItWorksPage() {
           </Card>
         </section>
 
-        <section className="space-y-6">
-          <h2 className="text-2xl font-bold text-foreground">
+        <section className="space-y-4 sm:space-y-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground">
             {t('howItWorks.workedExamples.title')}
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             {t('howItWorks.workedExamples.subtitle')}
           </p>
 
@@ -568,13 +592,13 @@ export default function HowItWorksPage() {
         </section>
 
         <Card className="bg-primary text-primary-foreground">
-          <CardContent className="p-6 text-center space-y-4">
-            <h3 className="text-xl font-semibold">
+          <CardContent className="text-center space-y-3 sm:space-y-4">
+            <h3 className="text-lg sm:text-xl font-semibold">
               {t('howItWorks.cta.title')}
             </h3>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 bg-background text-foreground px-6 py-3 rounded-lg font-medium hover:bg-background/90 transition-colors"
+              className="inline-flex items-center gap-2 bg-background text-foreground px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium hover:bg-background/90 transition-colors text-sm sm:text-base"
             >
               <Calculator className="h-5 w-5" />
               {t('howItWorks.cta.buttonText')}
@@ -583,8 +607,8 @@ export default function HowItWorksPage() {
         </Card>
       </main>
 
-      <footer className="border-t mt-12">
-        <div className="max-w-4xl mx-auto px-4 py-6 text-center text-sm text-muted-foreground">
+      <footer className="border-t mt-6 sm:mt-12">
+        <div className="max-w-4xl mx-auto px-3 sm:px-4 py-4 sm:py-6 text-center text-xs sm:text-sm text-muted-foreground">
           <p>{t('howItWorks.footer.disclaimer')}</p>
         </div>
       </footer>
