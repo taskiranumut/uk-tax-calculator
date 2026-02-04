@@ -2,6 +2,8 @@
 
 A tool for UK employees to estimate take home pay from gross salary, or calculate gross salary from net pay. It computes Income Tax and National Insurance deductions according to the tax rules for England, Wales, Northern Ireland, and Scotland.
 
+**[Live Demo](https://uk-tax-calculator-one.vercel.app/)**
+
 ## Purpose
 
 This calculator provides an **estimated** take home pay figure for a single employment, based on UK rules for:
