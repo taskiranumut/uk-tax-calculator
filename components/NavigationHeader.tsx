@@ -1,14 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import {
-  Calculator,
-  Moon,
-  Sun,
-  Globe,
-  ChevronDown,
-  HelpCircle,
-} from 'lucide-react';
+import Image from 'next/image';
+import { Moon, Sun, Globe, ChevronDown, HelpCircle } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import {
   DropdownMenu,
@@ -57,8 +51,14 @@ export function NavigationHeader({
             href="/"
             className="flex items-center gap-2 hover:opacity-80 transition-opacity min-w-0"
           >
-            <div className="bg-primary text-primary-foreground p-1.5 sm:p-2 rounded-lg shrink-0">
-              <Calculator className="h-4 w-4 sm:h-5 sm:w-5" />
+            <div className="relative h-8 w-8 sm:h-10 sm:w-10 shrink-0 overflow-hidden">
+              <Image
+                src="/main-logo.png"
+                alt="Logo"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
             <div className="flex flex-col min-w-0">
               <span className="font-bold text-sm sm:text-lg leading-tight text-foreground truncate">
