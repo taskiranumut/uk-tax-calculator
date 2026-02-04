@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
@@ -6,6 +6,12 @@ import { LocaleProvider } from '@/contexts/LocaleContext';
 import { NavigationHeader } from '@/components/NavigationHeader';
 import { Footer } from '@/components/Footer';
 import { ScrollLockFix } from '@/components/ScrollLockFix';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  interactiveWidget: 'resizes-content',
+};
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

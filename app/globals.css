@@ -175,7 +175,17 @@
 }
 
 /* Prevent layout shift when Radix UI locks scroll */
+/* Use auto instead of scroll - scroll causes jumpy behavior on mobile */
 html {
-  overflow-y: scroll;
+  overflow-y: auto;
   scrollbar-gutter: stable;
+}
+
+/* Mobile: ensure body doesn't expand beyond content - prevents empty space below footer
+   when Chrome address bar hides/shows (100vh vs dynamic viewport mismatch) */
+@media (pointer: coarse) {
+  html,
+  body {
+    min-height: 0;
+  }
 }
